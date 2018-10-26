@@ -25,7 +25,7 @@
 			</span>
 		</li>
 		<li tabindex="0" class="icon-find">
-			<span><a href="/" style="text-decorations:none; color:inherit;">Find Bills</span></li>
+			<span><a href="/" style="text-decorations:none; color:inherit;">Find Bill</span></li>
 		<li tabindex="0" class="icon-adduser">
 			<span>
 				<a href="/" style="text-decorations:none; color:inherit;">Add User</a>
