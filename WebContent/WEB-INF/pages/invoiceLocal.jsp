@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <head>
 <meta charset="utf-8">
@@ -62,12 +63,19 @@ border-top: 2px solid;
                 <div class="col-xs-6 text-right">
                     <address>
                     <span class="owner-title">${viewBill.customer.name}</span><br>
-                        ${viewBill.customer.address}<br>
-                        ${viewBill.customer.phone}<br>
-                        ${viewBill.customer.gstin}<br>
-                        ${viewBill.customer.emailaddress}<br>
-                        ${viewBill.customer.distt} ${viewBill.customer.state}<br><br>
-
+                    <c:if test="${not empty viewBill.customer.address}">
+    					${viewBill.customer.address}<br>
+					</c:if>
+                    <c:if test="${not empty viewBill.customer.phone}">
+                    	${viewBill.customer.phone}<br>
+                    </c:if>
+                    <c:if test="${not empty viewBill.customer.gstin}">
+                    	${viewBill.customer.gstin}<br>
+                    </c:if>
+                    <c:if test="${not empty viewBill.customer.emailaddress}">
+                    	${viewBill.customer.emailaddress}<br>
+                    </c:if>   
+                    ${viewBill.customer.distt} ${viewBill.customer.state}<br><br>  
                         <strong>Date : </strong>12 Dec 2018<br>
                         <strong>Vehical No : </strong>${users.vehicleno}<br>
                     </address>
