@@ -9,11 +9,12 @@ public class BillDetailsJSON {
 	
 	private Customer customer;
 	Map<Integer, BillDetails> billDetailsMap = new HashMap<Integer, BillDetails>();
-	private Double total;
-	private Double netAmount;
-	private Double sgst;
-	private Double cgst;
-	private Double igst;
+	private double total;
+	private double netAmount;
+	private double sgst;
+	private double cgst;
+	private double igst;
+	private String netAmountInWords;
 	
 	public BillDetailsJSON() {}
 
@@ -73,10 +74,22 @@ public class BillDetailsJSON {
 		this.igst = igst;
 	}
 
+	public String getNetAmountInWords() {
+		return netAmountInWords;
+	}
+
+	public void setNetAmountInWords(String netAmountInWords) {
+		this.netAmountInWords = netAmountInWords;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "BillDetailsJSON [customer=" + customer + ", BillDetails=" + billDetailsMap + ", total=" + total
-				+ ", netAmount=" + netAmount + ", sgst=" + sgst + ", cgst=" + cgst + ", igst=" + igst + "]";
+		return "BillDetailsJSON [customer=" + customer + ", billDetailsMap=" + billDetailsMap + ", total=" + total
+				+ ", netAmount=" + netAmount + ", sgst=" + sgst + ", cgst=" + cgst + ", igst=" + igst
+				+ ", netAmountInWords=" + netAmountInWords + "]";
 	}
 
 }

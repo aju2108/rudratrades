@@ -1,8 +1,5 @@
 package com.rtc.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.rtc.beans.BillDetailsJSON;
 import com.rtc.beans.Billing;
 import com.rtc.model.Users;
 import com.rtc.service.BillingService;
@@ -24,10 +23,11 @@ public class BillingController {
 	private BillingService billingService;
 	
 	@RequestMapping(value="/renderbill",method = RequestMethod.GET)  
-	public ModelAndView renderbill() {
+	public ModelAndView renderbill(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("adminHome");
 		Billing billing = billingService.renderBill();
 		mav.addObject("pageRequested", "renderBill");
+		request.getSession().removeAttribute("billMap");
 		mav.addObject("renderbill", billing);
 		return mav;
 	}
@@ -42,15 +42,27 @@ public class BillingController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/createBill",method = RequestMethod.GET)  
-	public ModelAndView createBill(HttpServletRequest request) {
+	@RequestMapping(value="/localBill",method = RequestMethod.GET)  
+	public ModelAndView localBill(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		ModelAndView mav = new ModelAndView("viewBill");
+		ModelAndView mav = new ModelAndView("invoiceLocal");
 		if(!StringUtils.isEmpty(session.getAttribute("userSession"))){
 			mav.addObject("users", (Users)session.getAttribute("userSession"));
 		}
-		Billing viewBill = billingService.createBill(session);
-		mav.addObject("viewBill", viewBill);
+		BillDetailsJSON localBill = billingService.createBill(session);
+		mav.addObject("viewBill", localBill);
+		return mav;
+	}
+	
+	@RequestMapping(value="/otherStateBill",method = RequestMethod.GET)  
+	public ModelAndView otherStateBill(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		ModelAndView mav = new ModelAndView("invoiceOtherState");
+		if(!StringUtils.isEmpty(session.getAttribute("userSession"))){
+			mav.addObject("users", (Users)session.getAttribute("userSession"));
+		}
+		BillDetailsJSON otherStateBill = billingService.createBill(session);
+		mav.addObject("viewBill", otherStateBill);
 		return mav;
 	}
 	

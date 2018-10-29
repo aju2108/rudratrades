@@ -13,34 +13,34 @@
 </head>
 <body>
 				<div class="table100 ver1 m-b-110">
-					<div class="table100-head">
-						<table id="billListTable">
+					<div class="table-responsive">          
+  						<table class="table">
 							<thead>
-								<tr class="row100 head">
-									<th class="cell100 column1">Product</th>
-									<th class="cell100 column2">HSN Code</th>
-									<th class="cell100 column2">Brand</th>
-									<th class="cell100 column3">Packing</th>
-									<th class="cell100 column4">Quantity</th>
-									<th class="cell100 column5">Unit</th>
-									<th class="cell100 column5">Actions</th>
+								<tr>
+									<th class="cell100">Product</th>
+									<th class="cell100">HSN Code</th>
+									<th class="cell100">Brand</th>
+									<th class="cell100">Packing</th>
+									<th class="cell100">Quantity</th>
+									<th class="cell100">Unit</th>
+									<th class="cell100">Actions</th>
 								</tr>
 							</thead>
 						</table>
 					</div>
 
-					<div class="table100-body js-pscroll">
+					<div>
 						<table>
 							<tbody>
 							<c:forEach var="bill" items="${renderbill.billMap}">
 								<tr class="row100 body">
-									<td class="cell100 column1">${bill.value.product}</td>
-									<td class="cell100 column2">${bill.value.hsnCode}</td>
-									<td class="cell100 column2">${bill.value.brand}</td>
-									<td class="cell100 column3">${bill.value.packing}</td>
-									<td class="cell100 column4">${bill.value.quantity}</td>
-									<td class="cell100 column5">${bill.value.unit}</td>
-									<td class="cell100 column6"><button onclick="deleteRow(2)">Delete</button></td>
+									<td class="cell100">${bill.value.product}</td>
+									<td class="cell100">${bill.value.hsnCode}</td>
+									<td class="cell100">${bill.value.brand}</td>
+									<td class="cell100">${bill.value.packing}</td>
+									<td class="cell100">${bill.value.quantity}</td>
+									<td class="cell100">${bill.value.unit}</td>
+									<td class="cell100"><button onclick="deleteRow(2)">Delete</button></td>
 								</tr>
 							</c:forEach>
 							</tbody>
@@ -48,7 +48,8 @@
 					</div>
 				</div>
 				<div class="footer">
-						<button name="createBill" value="Create Bill" type="button"><a href="createBill">Create Bill</a></button>
+						<button name="localBill" value="Create Local Bill" type="button"><a href="localBill">Local Bill</a></button>
+						<button name="otherStateBill" value="Create Other State Bill" type="button"><a href="otherStateBill">Other State Bill</a></button>
 				</div>
 
 	<script>

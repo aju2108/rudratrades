@@ -50,7 +50,7 @@ public void setBillDetails(BillDetails billDetails) {
 }
 
 
-Map<String, String> customersMap = new HashMap<String, String>();
+  Map<String, String> customersMap = new HashMap<String, String>();
   Map<String, String> productsMap = new HashMap<String, String>();
   Map<String, String> brandsMap = new HashMap<String, String>();
   Map<String, String> packgingMap = new HashMap<String, String>();

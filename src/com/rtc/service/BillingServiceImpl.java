@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 import com.rtc.beans.BillDetails;
 import com.rtc.beans.BillDetailsJSON;
 import com.rtc.beans.Billing;
-import com.rtc.dao.BrandProductPackingRateTaxMappingDAO;
 import com.rtc.model.Brand;
 import com.rtc.model.BrandProductPackingRateTaxMapping;
 import com.rtc.model.Customer;
@@ -24,6 +23,7 @@ import com.rtc.model.Packing;
 import com.rtc.model.Product;
 import com.rtc.model.Quantity;
 import com.rtc.model.Unit;
+import com.rtc.util.EnglishNumberToWords;
 
 @Service
 public class BillingServiceImpl implements BillingService {
@@ -97,49 +97,50 @@ public class BillingServiceImpl implements BillingService {
 	}
 	
 	@Override
-	public Billing createBill(HttpSession session){
+	public BillDetailsJSON createBill(HttpSession session){
 		Map<Integer, Billing> billMap = new HashMap<Integer, Billing>();
 		if(!StringUtils.isEmpty(session.getAttribute("billMap"))){
 			billMap = (Map<Integer, Billing>)session.getAttribute("billMap");
 		}
 		Customer customer = customerService.getCustomer(billMap.get(1).getCustomer());
-		Billing billing = new Billing();
-		billing.setBillMap(billMap);
-		billing.setDateTime(billMap.get(1).getDateTime());
-		billing.setCustomerObj(customer);
+		//billing.setDateTime(billMap.get(1).getDateTime());
+		//billing.setCustomerObj(customer);
 		
 		BillDetailsJSON invoice = new BillDetailsJSON();
+		invoice.setCustomer(customer);
 		
-		
-		billing.getBillMap().entrySet().parallelStream().forEach(entry -> {
-        	Billing billingEntry = entry.getValue();
+		billMap.entrySet().parallelStream().forEach(entry -> {
+        	Billing billing = entry.getValue();
         	
         	Map<Integer, BillDetails> billDetailsMap = new HashMap<Integer, BillDetails>();
         	BillDetails billDetails = new BillDetails();
         	
-        	billDetails.setProduct(billingEntry.getProduct());
-        	billDetails.setBrand(billingEntry.getBrand());
-        	billDetails.setHsnCode(billingEntry.getHsnCode());
+        	billDetails.setProduct(billing.getProduct());
+        	billDetails.setBrand(billing.getBrand());
+        	billDetails.setHsnCode(billing.getHsnCode());
+        	billDetails.setPacking(billing.getPacking());
+        	billDetails.setQuantity(billing.getQuantity());
         	
-        	
-        	int productId = productService.getProductByName(billingEntry.getProduct()).getId();
-        	int packingId = packingService.getPackingByName(billingEntry.getPacking()).getId();
-        	int brandId = brandService.getBrandByName(billingEntry.getBrand()).getId();
+        	int productId = productService.getProductByName(billing.getProduct()).getId();
+        	int packingId = packingService.getPackingByName(billing.getPacking()).getId();
+        	int brandId = brandService.getBrandByName(billing.getBrand()).getId();
         			
         	BrandProductPackingRateTaxMapping bpprtm = brandProductPackingRateTaxMappingService.getMappingByBrandProductPacking(brandId, productId, packingId);
-        	double amount = Double.valueOf(Integer.parseInt(billingEntry.getQuantity()) * bpprtm.getRate());
+        	double amount = Double.valueOf(Integer.parseInt(billing.getQuantity()) * bpprtm.getRate());
         	billDetails.setRate(bpprtm.getRate());
-        	billingEntry.setAmount(amount);
-        	billingEntry.setGst(bpprtm.getGST());
-        	billingEntry.setTotal(billingEntry.getTotal() + amount);
-        	double sgst_cgst = (billingEntry.getSgst() + ((bpprtm.getRate() * bpprtm.getGST()) / 100));
-        	billingEntry.setSgst(sgst_cgst/2);
-        	billingEntry.setCgst(sgst_cgst/2);
-        	billingEntry.setNetAmount(billingEntry.getNetAmount() + billingEntry.getTotal() + billingEntry.getSgst() + billingEntry.getCgst());	
+        	billDetails.setAmount(amount);
+        	billDetails.setGst(bpprtm.getGST());
+        	invoice.setTotal(invoice.getTotal() + amount);
+        	double sgst_cgst = (invoice.getSgst() + ((bpprtm.getRate() * bpprtm.getGST()) / 100));
+        	invoice.setSgst(sgst_cgst/2);
+        	invoice.setCgst(sgst_cgst/2);
+        	invoice.setNetAmount(invoice.getNetAmount() + invoice.getTotal() + invoice.getSgst() + invoice.getCgst());
+        	billDetailsMap.put(entry.getKey(), billDetails);
+        	invoice.setBillDetailsMap(billDetailsMap);
         });
 		
-		
-		return billing;
+		invoice.setNetAmountInWords(EnglishNumberToWords.convert(new Double(invoice.getNetAmount()).longValue()));
+		return invoice;
 	}
 	
 	public void setBillingMaps(Billing billing){
