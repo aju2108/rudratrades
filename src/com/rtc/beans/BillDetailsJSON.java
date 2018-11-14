@@ -34,43 +34,43 @@ public class BillDetailsJSON {
 		this.billDetailsMap = billDetailsMap;
 	}
 
-	public Double getTotal() {
+	public double getTotal() {
 		return total;
 	}
 
-	public void setTotal(Double total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
 
-	public Double getNetAmount() {
+	public double getNetAmount() {
 		return netAmount;
 	}
 
-	public void setNetAmount(Double netAmount) {
+	public void setNetAmount(double netAmount) {
 		this.netAmount = netAmount;
 	}
 
-	public Double getSgst() {
+	public double getSgst() {
 		return sgst;
 	}
 
-	public void setSgst(Double sgst) {
+	public void setSgst(double sgst) {
 		this.sgst = sgst;
 	}
 
-	public Double getCgst() {
+	public double getCgst() {
 		return cgst;
 	}
 
-	public void setCgst(Double cgst) {
+	public void setCgst(double cgst) {
 		this.cgst = cgst;
 	}
 
-	public Double getIgst() {
+	public double getIgst() {
 		return igst;
 	}
 
-	public void setIgst(Double igst) {
+	public void setIgst(double igst) {
 		this.igst = igst;
 	}
 

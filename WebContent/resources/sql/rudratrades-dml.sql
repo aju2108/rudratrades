@@ -4,7 +4,7 @@ INSERT INTO users (firstname, lastname, username, password, emailaddress, phone1
 bankname, bankaccountnumber, bankifsccode, trademark, vehicleno, speciality, company, address, statecode, gstin)
 VALUES 
 ('Sanjay', 'Yadav', 'sanjay123', 'sanjay123', 'sanjay.yadavmkt@gmail.com', '+91 9315550444', '+91 9315109008',
-'Central Bank of India', '3316808362', 'CBIN0283473', 'Subject to Jagadhari Jursidction only.', 'HR46B1595',
+'DCB Bank Limited', '22022900001908', 'DCBL0000220', 'Subject to Jagadhari Jursidction only.', 'HR46B1595',
 'Desi Ghee & Milk Powder', 'Rudra Trading Co', 'Khalsa College Road, Yamuna Nagar, Haryana 135001', '06', '06ABLPY8531E1ZA');
 
 ********************************************** Product *****************************************************
@@ -103,15 +103,15 @@ INSERT INTO public.brand (name) VALUES ('Patanjali');
 ************************************** Brand_Product_Packing_Rate_Tax_Mapping ****************************
 
 INSERT INTO public.brand_product_packing_rate_tax_mapping(
-	brandid, productid, packingid, rate, gst, cgst, igst, created_date, modified_date)
+	brandid, productid, packingid, rate, gst, cgst, igst, createdDate, modifiedDate)
 	VALUES (1, 2, 1, 100, 10, 5, 5, current_timestamp, current_timestamp);
 	
 INSERT INTO public.brand_product_packing_rate_tax_mapping(
-	brandid, productid, packingid, rate, gst, cgst, igst, created_date, modified_date)
+	brandid, productid, packingid, rate, gst, cgst, igst, createdDate, modifiedDate)
 	VALUES (2, 3, 3, 200, 20, 10, 10, current_timestamp, current_timestamp);
 	
 INSERT INTO public.brand_product_packing_rate_tax_mapping(
-	brandid, productid, packingid, rate, gst, cgst, igst, created_date, modified_date)
+	brandid, productid, packingid, rate, gst, cgst, igst, createdDate, modifiedDate)
 	VALUES (3, 2, 3, 300, 30, 10, 10, current_timestamp, current_timestamp);
     
 

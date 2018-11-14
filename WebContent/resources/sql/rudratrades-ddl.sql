@@ -125,8 +125,8 @@ CREATE TABLE public."brand_product_packing_rate_tax_mapping"
     GST double precision,
     CGST double precision,
     IGST double precision,
-    created_date date,
-    modified_date date,
+    createdDate date,
+    modifiedDate date,
     CONSTRAINT brand_product_packing_rate_tax_mapping_pkey PRIMARY KEY (id)
 )
 WITH (

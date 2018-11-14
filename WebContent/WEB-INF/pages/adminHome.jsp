@@ -10,8 +10,8 @@
 <body>
 	<nav class="menu" tabindex="0">
 	<div class="smartphone-menu-trigger"></div>
-	<header class="avatar"> <!--  <img src="resources/images/admin.jpg" /> -->
-	<h2><!--  Sanjay Yadav  --></h2>
+	<header class="avatar"> <img src="resources/images/admin.jpg" />
+	<h2> Sanjay Yadav </h2>
 	</header>
 	<ul>
 		<li tabindex="0" class="icon-dashboard">

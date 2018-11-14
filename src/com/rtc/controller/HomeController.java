@@ -56,7 +56,7 @@ public class HomeController {
 			Billing billing = billingService.renderBill();
 			mav.addObject("renderbill", billing);
 			mav.addObject("pageRequested", "dashboard");
-			mav.setViewName("adminHome");
+			mav.setViewName("dashboard");
 		}else{
 			user.setErrorMessage("Please enter valid username and password");	
 			mav.addObject("user", user);

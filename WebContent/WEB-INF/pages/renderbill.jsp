@@ -35,7 +35,7 @@
 	<!-- content -->
 	<div class="main-content-agile">
 		<div class="sub-main-w3">
-			<form:form method="POST" commandName="renderbill" action="submitBill">
+			<form:form method="POST" commandName="createbill" action="submitBill">
 			<div class="w3layouts-grids">
 				<div class="form-style-agile form-grids-w3l">
 					<label>Customer</label>
