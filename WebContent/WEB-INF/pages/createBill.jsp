@@ -100,7 +100,7 @@
                 <div class="sidebar-header">
                     <a href="#"><img src="resources/img/message/1.jpg" alt="" />
                     </a>
-                    <h3>Sanjay Yadav</h3>
+                    <h3>Sinto Joes</h3>
                     <p>Owner</p>
                     <strong>RTC</strong>
                 </div>
@@ -258,7 +258,7 @@
                                         <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
                                                 <span class="adminpro-icon adminpro-user-rounded header-riht-inf"></span>
-                                                <span class="admin-name">Sanjay Yadav</span>
+                                                <span class="admin-name">Sinto Joes</span>
                                                 <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
                                             </a>
                                             <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">
@@ -427,14 +427,13 @@
                                     </div>
                                 </div>
                                 <div class="sparkline15-graph">
-                                <form:form method="POST" commandName="createbill" action="submitBill">
+                                <form:form method="POST" id="createbillForm" name="createbillForm" commandName="createbill" action="submitBill">
                                     <div class="row">
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Customer</label> 
-												<form:select class="form-control custom-select-value" id="customer" name="customer" path="customer" placeholder="Select Customer" required="required">
+												<form:select class="form-control custom-select-value" id="customer" name="customer" path="customerId" placeholder="Select Customer" required="required">
 													<%-- <form:option value="" label="Select Customer"/> --%>
-													<form:option value="" label="Select Customer"/>
 													<form:options items="${createbill.customersMap}"/>
 												</form:select>
 											</div>
@@ -442,9 +441,8 @@
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Brand</label> 
-                                                <form:select class="form-control custom-select-value" id="brand" name="brand" path="brand" placeholder="Select Brand" required="required">
+                                                <form:select class="form-control custom-select-value" id="brand" name="brand" path="brandId" placeholder="Select Brand" required="required">
 													<%-- <form:option value="" label="Select Brand"/> --%>
-													<form:option value="" label="Select Brand	"/>
 													<form:options items="${createbill.brandsMap}"/>
 												</form:select>
                                             </div>
@@ -452,9 +450,8 @@
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Product</label> 
-                                                <form:select class="form-control custom-select-value" id="product" name="product" path="product" placeholder="Select Product" required="required">
+                                                <form:select class="form-control custom-select-value" id="product" name="product" path="productId" placeholder="Select Product" required="required">
 													<%-- <form:option value="" label="Select Product"/> --%>
-													<form:option value="" label="Select Product"/>
 													<form:options items="${createbill.productsMap}"/>
 												</form:select>
 											</div>
@@ -468,10 +465,10 @@
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Packing</label> 
-												<form:select class="form-control custom-select-value" id="packing" name="packing" path="packing" placeholder="Select Packing" required="required">
+												<form:select class="form-control custom-select-value" id="packing" name="packing" path="packingId" placeholder="Select Packing" required="required">
 													<%-- <form:option value="" label="Select Packing"/> --%>
-													<form:option value="" label="Select Packing"/>
-													<%-- <form:options items="${createbill.packgingMap}"/> --%>
+													<%-- <form:option value="" label="Select Packing"/> --%>
+													<form:options items="${createbill.packgingMap}"/>
 												</form:select>
                                             </div>
                                         </div>
@@ -514,10 +511,9 @@
                                             <div class="touchspin-inner">
                                                 <label>Bill Payment Type</label> 
                                                 <form:select class="form-control custom-select-value" name="billPaymentType" path="quantity" placeholder="Select Bill Payment Type" required="required">
-													<%-- <form:option value="" label="Select Quantity"/> --%>
-													<form:option value="" label="Select Bill Payment Type"/>
-													<form:option value="" label="Credit"/>
-													<form:option value="" label="Cash"/>
+													<%-- <form:option value="" label="Select Bill Payment Type"/>--%>
+													<form:option value="1" label="Credit"/>
+													<form:option value="2" label="Cash"/>
 												</form:select>
                                             </div>
                                         </div>
@@ -538,14 +534,15 @@
                                         </div>
 
                                     </div>
-                                    <input type="submit" value="Submit" class="btn btn-custon-four btn-success">
+                                    <button type="submit" class="btn btn-custon-four btn-success">Submit</button>
+                                    <!-- <input type="submit" value="Submit" class="btn btn-custon-four btn-success">  -->
                                     </form:form>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <div class="row" id="itemsListContainer" style="display: none;">
                         <div class="col-lg-12">
                             <div class="sparkline10-list shadow-reset mg-t-30">
                                 <div class="sparkline10-hd">
@@ -568,7 +565,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">HSN Code</th>
                                             <th scope="col">Product</th>
-                                            <th scope="col">Brand</th>
+                                            <th scope="col" id="brandTHId">Brand</th>
                                             <th scope="col">Packing</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Actions</th>
@@ -580,7 +577,7 @@
                                 </div>
                                 <div class="sparkline15-graph">
                                     <br />
-                                    <input type="submit" value="Create Bill" class="btn btn-custon-four btn-success">
+                                    <button name="createBill" value="Create Bill" type="button" class="btn btn-custon-four btn-success"><a href="localBill">Local Bill</a></button>
                                 </div>
                             </div>
                         </div>
@@ -588,7 +585,14 @@
                 </div>
             </div>
             <!-- Basic Form End-->
-
+<!-- Result Container  -->
+<div id="resultContainer" style="display: none;">
+ <hr/>
+ <h4 style="color: green;">JSON Response From Server</h4>
+  <pre style="color: green;">
+    <code></code>
+   </pre>
+</div>
         </div>
     </div>
     <!-- Footer Start-->
@@ -763,9 +767,73 @@ if (/Mobile/.test(navigator.userAgent)) {
 }
 </script>
 
-<script type="text/javascript">
+ 	<script type="text/javascript">
+		$(function() {
+			$('button[type=submit]').click(
+					function(e) {
+						e.preventDefault();
+						$('#itemslisttable tbody tr').remove();
+						var ischecked = $('#includeBrand').is(":checked");
+				        if (ischecked) {
+				        	$('#brandTHId').show();
+				        }else{
+				        	$('#brandTHId').hide();
+				        }
+						var str = $("#createbillForm").serialize();
+						var img = "<img src='resources/img/clear.png' />";
+						$.ajax({
+		                    type: "POST",
+		                    url: "submitBill",
+		                    data : $('form[name=createbillForm]').serialize(),
+		                    success: function(responseJson){
+								var $table = $("#itemslisttable tbody");
+								$('#itemsListContainer').show();
+			                    $.each(responseJson, function(key, value) {    // Iterate over the JSON array.
+			                        if (value.brand != undefined) {
+			                        	$("<tr>").appendTo($table)
+			                        	.append($("<td>").text(key)) // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
+				                        .append($("<td>").text(value.hsnCode))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.product))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.brand))
+				                        .append($("<td>").text(value.packing))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.quantity))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.unit))
+				                        .append($("<td>"+img));
+		                            }else{
+		                            	$("<tr>").appendTo($table)   
+				                        .append($("<td>").text(key)) // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
+				                        .append($("<td>").text(value.hsnCode))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.product))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.packing))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.quantity))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.unit))
+				                        .append($("<td>"+img));
+		                            }
+			                    });
+							}
+						})
+					});
+		});
+	</script>
+	
+	<!-- <script type="text/javascript">
+	$includeBrand = $('#includeBrand');
+			$includeBrand.change(
+					function() {
+					        var ischecked = $('#includeBrand').is(":checked");
+					        if (ischecked) {
+					        	$('#brandTHId').show();
+					        }else{
+					        	$('#brandTHId').hide();
+					        }
+		});
+	</script>  --%>
+	
+<!-- <script type="text/javascript">
 $product = $('#product');
         $product.change (
+        var Con = confirm("are you sure ?");
+            if (Con == true) {
             function() {
                 $.ajax({
                     type: "GET",
@@ -789,17 +857,17 @@ $product = $('#product');
                     }
                 });
             }
-        );
-    </script>
-    
-    <script>
+        });
+    </script> --%>
+
+	<!-- <script type="text/javascript">
     $customer = $('#customer');
     $customer.change (
             function() {
             	$.get("check", function(responseJson) {          // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response JSON...
                     var $table = $("#itemslisttable tbody"); // Create HTML <table> element and append it to HTML DOM element with ID "somediv".
                     $.each(responseJson, function(key, value) {    // Iterate over the JSON array.
-                        $("<tr>").appendTo($table)                     // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
+                        	$("<tr>").appendTo($table)                     // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
                             .append($("<td>").text(value))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
                             .append($("<td>").text(value))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
                             .append($("<td>").text(value))
@@ -809,7 +877,7 @@ $product = $('#product');
                     });
                 });
             });
-</script>
+</script>-->
 
 </body>
 

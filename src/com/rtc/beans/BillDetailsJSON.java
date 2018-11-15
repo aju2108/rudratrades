@@ -9,6 +9,8 @@ public class BillDetailsJSON {
 	
 	private Customer customer;
 	Map<Integer, BillDetails> billDetailsMap = new HashMap<Integer, BillDetails>();
+	private String vehicleNo;
+	private String billPaymentType;
 	private double total;
 	private double netAmount;
 	private double sgst;
@@ -81,10 +83,23 @@ public class BillDetailsJSON {
 	public void setNetAmountInWords(String netAmountInWords) {
 		this.netAmountInWords = netAmountInWords;
 	}
+	
+	public String getVehicleNo() {
+		return vehicleNo;
+	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+	public void setVehicleNo(String vehicleNo) {
+		this.vehicleNo = vehicleNo;
+	}
+	
+	public String getBillPaymentType() {
+		return billPaymentType;
+	}
+
+	public void setBillPaymentType(String billPaymentType) {
+		this.billPaymentType = billPaymentType;
+	}
+
 	@Override
 	public String toString() {
 		return "BillDetailsJSON [customer=" + customer + ", billDetailsMap=" + billDetailsMap + ", total=" + total

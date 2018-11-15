@@ -51,6 +51,7 @@ public class BillingServiceImpl implements BillingService {
 	public Billing renderBill() {
 		Billing billing = new Billing();
 		billing.setHsnCode("0402");
+		billing.setQuantity(1);
 		setBillingMaps(billing);
 		billing.setButtonName("Submit");
 		return billing;
@@ -58,7 +59,7 @@ public class BillingServiceImpl implements BillingService {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Billing submitBill(Billing billing, HttpSession session) {
+	public Map<Integer, Billing> submitBill(Billing billing, HttpSession session) {
 		
 		//SimpleDateFormat simpleDateFormater = new SimpleDateFormat("dd-MMM-yyyy");
 		//SimpleDateFormat simpleTimeFormater = new SimpleDateFormat("hh:mm a");
@@ -70,14 +71,21 @@ public class BillingServiceImpl implements BillingService {
 		setBillingMaps(billing);
 
 		Billing billview = new Billing();
-		billview.setCustomer(billing.getCustomer());
-		billview.setProduct(billing.getProduct());
+		billview.setCustomer(billing.getCustomersMap().get(billing.getCustomerId()));
+		billview.setProduct(billing.getProductsMap().get(billing.getProductId()));
+		billview.setProductId(billing.getProductId());
 		billview.setHsnCode(billing.getHsnCode());
-		billview.setBrand(billing.getBrand());
-		billview.setPacking(billing.getPacking());
+		if(billing.isIncludeBrand()){
+			billview.setBrand(billing.getBrandsMap().get(billing.getBrandId()));
+		}
+		billview.setBrandId(billing.getBrandId());
+		billview.setPacking(billing.getPackgingMap().get(billing.getPackingId()));
+		billview.setPackingId(billing.getPackingId());
 		billview.setQuantity(billing.getQuantity());
 		billview.setUnit(billing.getUnit());
 		billview.setDate(billing.getDate());
+		billview.setBillPaymentType(billing.getBillPaymentType());
+		billview.setVehicleNo(billing.getVehicleNo());
 
 		if (StringUtils.isEmpty(session.getAttribute("billMap"))) {
 			billMap.put(billing.getBillMap().size() + 1, billview);
@@ -87,13 +95,8 @@ public class BillingServiceImpl implements BillingService {
 			billMap.put(sessionBillMap.size() + 1, billview);
 		}
 		session.setAttribute("billMap", billMap);
-		billing.setBillMap(billMap);
 
-		// Customer customer =
-		// customerService.getCustomer(Integer.parseInt(billing.getCustomer()));
-		// billing.setCustomerObj(customer);
-		billing.setButtonName("Add More");
-		return billing;
+		return billMap;
 	}
 
 	@Override
@@ -108,7 +111,8 @@ public class BillingServiceImpl implements BillingService {
 
 		BillDetailsJSON invoice = new BillDetailsJSON();
 		invoice.setCustomer(customer);
-
+		invoice.setVehicleNo(billMap.get(1).getVehicleNo());
+		invoice.setBillPaymentType(billMap.get(1).getBillPaymentType());
 		Map<Integer, BillDetails> billDetailsMap = new HashMap<Integer, BillDetails>();
 
 		billMap.entrySet().parallelStream().forEach(entry -> {
@@ -122,13 +126,13 @@ public class BillingServiceImpl implements BillingService {
 			billDetails.setPacking(billing.getPacking());
 			billDetails.setQuantity(billing.getQuantity());
 
-			int productId = productService.getProductByName(billing.getProduct()).getId();
-			int packingId = packingService.getPackingByName(billing.getPacking()).getId();
-			int brandId = brandService.getBrandByName(billing.getBrand()).getId();
+			//int productId = productService.getProductByName(billing.getProduct()).getId();
+			//int packingId = packingService.getPackingByName(billing.getPacking()).getId();
+			//int brandId = brandService.getBrandByName(billing.getBrand()).getId();
 
 			BrandProductPackingRateTaxMapping bpprtm = brandProductPackingRateTaxMappingService
-					.getMappingByBrandProductPacking(brandId, productId, packingId);
-			double amount = Double.valueOf(Integer.parseInt(billing.getQuantity()) * bpprtm.getRate());
+					.getMappingByBrandProductPacking(billing.getBrandId(), billing.getProductId(), billing.getPackingId());
+			double amount = Double.valueOf(billing.getQuantity() * bpprtm.getRate());
 			billDetails.setRate(bpprtm.getRate());
 			billDetails.setAmount(amount);
 			billDetails.setGst(bpprtm.getGST());

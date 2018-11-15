@@ -1,5 +1,7 @@
 package com.rtc.service;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import com.rtc.beans.BillDetailsJSON;
@@ -11,6 +13,6 @@ public interface BillingService {
 	
 	public BillDetailsJSON createBill(HttpSession session);
 	
-	public Billing submitBill(Billing billing, HttpSession session);
+	public Map<Integer, Billing> submitBill(Billing billing, HttpSession session);
 
 }

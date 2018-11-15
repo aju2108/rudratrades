@@ -39,13 +39,17 @@ public class BillingController {
 	}
 
 	@RequestMapping(value = "/submitBill", method = RequestMethod.POST)
-	public ModelAndView submitBill(@ModelAttribute("bill") Billing billing, HttpServletRequest request) {
+	public void submitBill(@ModelAttribute("bill") Billing billing, HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		ModelAndView mav = new ModelAndView("createBill");
-		Billing viewBill = billingService.submitBill(billing, session);
-		mav.addObject("pageRequested", "renderBill");
-		mav.addObject("renderbill", viewBill);
-		return mav;
+		try {
+			Map<Integer, Billing> billMap = billingService.submitBill(billing, session);
+			String itemsMapJson = new Gson().toJson(billMap);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(itemsMapJson);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping(value = "/check", method = RequestMethod.GET)

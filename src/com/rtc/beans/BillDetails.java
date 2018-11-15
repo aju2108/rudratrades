@@ -6,7 +6,7 @@ public class BillDetails {
 	private String hsnCode;
 	private String brand;
 	private String packing;
-	private String quantity;
+	private Integer quantity;
 	private String unit;
 	private double rate;
 	private double gst;
@@ -15,7 +15,7 @@ public class BillDetails {
 	public BillDetails() {
 	}
 	
-	public BillDetails(String product, String hsnCode, String brand, String packing, String quantity, String unit, double rate,
+	public BillDetails(String product, String hsnCode, String brand, String packing, Integer quantity, String unit, double rate,
 			double gst, double amount) {
 		super();
 		this.product = product;
@@ -53,10 +53,10 @@ public class BillDetails {
 	public void setPacking(String packing) {
 		this.packing = packing;
 	}
-	public String getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(String quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 	public String getUnit() {

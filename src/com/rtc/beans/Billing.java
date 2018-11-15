@@ -12,7 +12,7 @@ public class Billing extends BillDetails {
 
 	}
 
-	public Billing(String product, String hsnCode, String brand, String packing, String quantity, String unit,
+	public Billing(String product, String hsnCode, String brand, String packing, Integer quantity, String unit,
 			Double rate, Double gst, Double amount) {
 		super(product, hsnCode, brand, packing, quantity, unit, rate, gst, amount);
 	}
@@ -33,6 +33,11 @@ public class Billing extends BillDetails {
 	private double total;
 	private double netAmount;
 	private BillDetails billDetails;
+	
+	private Integer customerId;
+	private Integer productId;
+	private Integer brandId;
+	private Integer packingId;
 
 	/**
 	 * @return the billDetails
@@ -290,5 +295,37 @@ public class Billing extends BillDetails {
 
 	public void setBillMap(Map<Integer, Billing> billMap) {
 		this.billMap = billMap;
+	}
+
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
+	}
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+	public Integer getBrandId() {
+		return brandId;
+	}
+
+	public void setBrandId(Integer brandId) {
+		this.brandId = brandId;
+	}
+
+	public Integer getPackingId() {
+		return packingId;
+	}
+
+	public void setPackingId(Integer packingId) {
+		this.packingId = packingId;
 	}
 }
