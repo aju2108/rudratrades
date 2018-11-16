@@ -135,7 +135,7 @@
 		                        </span>
 		                        </a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="inbox.html" class="dropdown-item">Add Products Rates</a>
+                                <a href="${pageContext.request.contextPath}/showrates" class="dropdown-item">Add Products Rates</a>
                                 <a href="view-mail.html" class="dropdown-item">View Products Rates</a>
                                 <a href="compose-mail.html" class="dropdown-item">Update Products Rates</a>
                             </div>

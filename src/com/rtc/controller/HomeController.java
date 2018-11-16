@@ -37,7 +37,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/dashboard")
 	public ModelAndView dashBoard() throws IOException {
-		ModelAndView mav = new ModelAndView("adminHome");
+		ModelAndView mav = new ModelAndView("dashboard");
 		mav.addObject("pageRequested", "dashboard");
 		return mav;  
 	}

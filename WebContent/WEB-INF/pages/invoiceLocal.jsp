@@ -313,7 +313,7 @@ row {
 											<td class="text-center bottomborder">${items.value.amount}</td>
 										</tr>
 									</c:forEach>
-
+									<!-- 
 									<tr>
 										<td class="text-center bottomborder"></td>
 										<td class="text-center  bottomborder">&nbsp;</td>
@@ -357,6 +357,7 @@ row {
 										<td class="text-center  bottomborder">&nbsp;</td>
 										<td class="text-center  bottomborder">&nbsp;</td>
 									</tr>
+									 -->
 								</tbody>
 							</table>
 						</div>

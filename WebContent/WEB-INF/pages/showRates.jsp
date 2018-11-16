@@ -6,12 +6,12 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Advance Form Element | Adminpro - Admin Template</title>
+    <title>Data Table | Adminpro - Admin Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
 		============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="resources/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
     <!-- Google Fonts
 		============================================ -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i,800" rel="stylesheet">
@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="resources/css/font-awesome.min.css">
     <!-- adminpro icon CSS
 		============================================ -->
-    <link rel="stylesheet" href="resources/css/adminpro-custon-icon.css">
+    <link rel="stylesheet" href="css/adminpro-custon-icon.css">
     <!-- meanmenu icon CSS
 		============================================ -->
     <link rel="stylesheet" href="resources/css/meanmenu.min.css">
@@ -33,34 +33,16 @@
     <!-- animate CSS
 		============================================ -->
     <link rel="stylesheet" href="resources/css/animate.css">
-    <!-- modals CSS
+    <!-- normalize CSS
 		============================================ -->
-    <link rel="stylesheet" href="resources/css/modals.css">
+    <link rel="stylesheet" href="resources/css/data-table/bootstrap-table.css">
+    <link rel="stylesheet" href="resources/css/data-table/bootstrap-editable.css">
     <!-- normalize CSS
 		============================================ -->
     <link rel="stylesheet" href="resources/css/normalize.css">
-    <!-- touchspin CSS
+    <!-- charts CSS
 		============================================ -->
-    <link rel="stylesheet" href="resources/css/touchspin/jquery.bootstrap-touchspin.min.css">
-    <!-- datapicker CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/datapicker/datepicker3.css">
-    <!-- forms CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/form/themesaller-forms.css">
-    <!-- colorpicker CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/colorpicker/colorpicker.css">
-    <!-- select2 CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/select2/select2.min.css">
-    <!-- chosen CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/chosen/bootstrap-chosen.css">
-    <!-- ionRangeSlider CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/ionRangeSlider/ion.rangeSlider.css">
-    <link rel="stylesheet" href="resources/css/ionRangeSlider/ion.rangeSlider.skinFlat.css">
+    <link rel="stylesheet" href="resources/css/c3.min.css">
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="resources/css/adminpro/style.css">
@@ -70,19 +52,6 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="resources/js/vendor/modernizr-2.8.3.min.js"></script>
-
-	<!-- clockpicker CSS
-		============================================ -->
-	<link rel="stylesheet" type="text/css" href="resources/css/timepicker/jquery-clockpicker.min.css">
-	<link rel="stylesheet" type="text/css" href="resources/css/timepicker/github.min.css">
-	
-	<!-- clockpicker JS
-		============================================ -->
-	<script type="text/javascript" src="resources/js/timepicker/highlight.min.js"></script>
-	<script type="text/javascript" src="resources/js/timepicker/jquery.min.js"></script>
-	<script type="text/javascript" src="resources/js/timepicker/jquery-clockpicker.min.js"></script>
-
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
 
 </head>
@@ -167,7 +136,7 @@
 		                        </span>
 		                        </a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="inbox.html" class="dropdown-item">Add Products Rates</a>
+                                <a href="${pageContext.request.contextPath}/showrates" class="dropdown-item">Add Products Rates</a>
                                 <a href="view-mail.html" class="dropdown-item">View Products Rates</a>
                                 <a href="compose-mail.html" class="dropdown-item">Update Products Rates</a>
                             </div>
@@ -182,7 +151,7 @@
 		                        </span>
 		                        </a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="inbox.html" class="dropdown-item">Create Bill</a>
+                                <a href="${pageContext.request.contextPath}/createbill" class="dropdown-item">Create Bill</a>
                             </div>
                         </li>
                         
@@ -357,7 +326,7 @@
 						                        </span>
 						                        </a>
 				                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-				                                <a href="${pageContext.request.contextPath}/showrates" class="dropdown-item">Add Products Rates</a>
+				                                <a href="inbox.html" class="dropdown-item">Add Products Rates</a>
 				                                <a href="view-mail.html" class="dropdown-item">View Products Rates</a>
 				                                <a href="compose-mail.html" class="dropdown-item">Update Products Rates</a>
 				                            </div>
@@ -372,7 +341,7 @@
 						                        </span>
 						                        </a>
 				                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-				                                <a href="${pageContext.request.contextPath}/createbill" class="dropdown-item">Create Bill</a>
+				                                <a href="inbox.html" class="dropdown-item">Create Bill</a>
 				                            </div>
 				                        </li>
 				                        
@@ -418,7 +387,7 @@
                             <div class="sparkline15-list shadow-reset mg-t-30">
                                 <div class="sparkline15-hd">
                                     <div class="main-sparkline15-hd">
-                                        <h1>Create Bill</h1>
+                                        <h1>Add Rates</h1>
                                         <div class="sparkline15-outline-icon">
                                             <span class="sparkline15-collapse-link"><i class="fa fa-chevron-up"></i></span>
                                             <span><i class="fa fa-wrench"></i></span>
@@ -427,23 +396,15 @@
                                     </div>
                                 </div>
                                 <div class="sparkline15-graph">
-                                <form:form method="POST" id="createbillForm" name="createbillForm" commandName="createbill" action="submitBill">
+                                <form:form method="POST" id="addRatesForm" name="addRatesForm" commandName="showRates" action="addrates">
                                     <div class="row">
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
-                                                <label>Customer</label> 
-												<form:select class="form-control custom-select-value" id="customer" name="customer" path="customerId" placeholder="Select Customer" required="required">
-													<%-- <form:option value="" label="Select Customer"/> --%>
-													<form:options items="${createbill.customersMap}"/>
-												</form:select>
-											</div>
-                                        </div>
+                                        
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Brand</label> 
                                                 <form:select class="form-control custom-select-value" id="brand" name="brand" path="brandId" placeholder="Select Brand" required="required">
 													<%-- <form:option value="" label="Select Brand"/> --%>
-													<form:options items="${createbill.brandsMap}"/>
+													<form:options items="${showRates.brandsMap}"/>
 												</form:select>
                                             </div>
                                         </div>
@@ -452,15 +413,9 @@
                                                 <label>Product</label> 
                                                 <form:select class="form-control custom-select-value" id="product" name="product" path="productId" placeholder="Select Product" required="required">
 													<%-- <form:option value="" label="Select Product"/> --%>
-													<form:options items="${createbill.productsMap}"/>
+													<form:options items="${showRates.productsMap}"/>
 												</form:select>
 											</div>
-                                        </div>
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
-                                                <label>HSN Code</label> 
-                                                <form:input class="form-control" id="hsnCode" path="hsnCode" placeholder="HSN Code" required="required" />
-                                            </div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
@@ -468,69 +423,39 @@
 												<form:select class="form-control custom-select-value" id="packing" name="packing" path="packingId" placeholder="Select Packing" required="required">
 													<%-- <form:option value="" label="Select Packing"/> --%>
 													<%-- <form:option value="" label="Select Packing"/> --%>
-													<form:options items="${createbill.packgingMap}"/>
+													<form:options items="${showRates.packgingMap}"/>
 												</form:select>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
-                                                <label>Quantity</label> 
-                                                
-												 <form:input class="form-control" id="quantity" path="quantity" placeholder="Select Quantity" required="required" />
+                                                <label>Rate</label> 
+												 <form:input class="form-control" id="rate" path="rate" placeholder="Enter Rate" required="required" />
                                             </div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
-                                                <label>Vehicle No</label> 
-                                                <form:input class="form-control" path="vehicleNo" placeholder="Vehicle No" />
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-lg-4 mg-b-20 form-group data-custon-pick" id="data_1">
-                                            <div class="touchspin-inner">
-                                            	<label>Date</label>
-                                                <div class="input-group date">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <form:input class="form-control" path="date" placeholder="Date" required="required" />
-                                                    </div>
+                                                <label>GST</label> 
+                                                <form:input class="form-control" id="gst" path="gst" placeholder="Enter GST" />
                                             </div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
-                                                <label>Time</label> 
-                                                <div class="input-group clockpicker pull-center" data-placement="left" data-align="top" data-autoclose="true">
-													<form:input class="form-control" path="time" placeholder="Time" />
-													<span class="input-group-addon">
-														<span class="glyphicon glyphicon-time"></span>
-													</span>
-												</div>
+                                                <label>SGST</label> 
+                                                <form:input class="form-control" id="sgst" path="sgst" placeholder="Enter SGST" />
                                             </div>
                                         </div>
-                                        
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
-                                                <label>Bill Payment Type</label> 
-                                                <form:select class="form-control custom-select-value" name="billPaymentType" path="quantity" placeholder="Select Bill Payment Type" required="required">
-													<%-- <form:option value="" label="Select Bill Payment Type"/>--%>
-													<form:option value="1" label="Credit"/>
-													<form:option value="2" label="Cash"/>
-												</form:select>
+                                                <label>CGST</label> 
+                                                <form:input class="form-control" id="cgst" path="cgst" placeholder="Enter CGST" />
                                             </div>
                                         </div>
-                                        
-                                        <div class="col-lg-8 mg-b-20 form-group data-custon-pick">
-                                                <div class="col-lg-4">
-                                                    <label>Create Other State Bill</label><br />
-                                                    <form:checkbox path="otherStateBill" id="otherStateBill"/>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label>Include Brand In Bill</label><br />
-                                                    <form:checkbox path="includeBrand" id="includeBrand"/>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label>Create Full Page Bill</label><br />
-                                                    <form:checkbox path="fullPageBill" id="fullPageBill"/>
-                                                </div>
+                                        <div class="col-lg-4 mg-b-20">
+                                            <div class="touchspin-inner">
+                                                <label>IGST</label> 
+                                                <form:input class="form-control" id="igst" path="igst" placeholder="Enter IGST" />
+                                            </div>
                                         </div>
 
                                     </div>
@@ -585,6 +510,382 @@
                 </div>
             </div>
             <!-- Basic Form End-->
+            
+            <!-- Breadcome End-->
+            <!-- Static Table Start -->
+            <div class="data-table-area mg-b-15">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="sparkline13-list shadow-reset">
+                                <div class="sparkline13-hd">
+                                    <div class="main-sparkline13-hd">
+                                        <h1>Projects <span class="table-project-n">Data</span> Table</h1>
+                                        <div class="sparkline13-outline-icon">
+                                            <span class="sparkline13-collapse-link"><i class="fa fa-chevron-up"></i></span>
+                                            <span><i class="fa fa-wrench"></i></span>
+                                            <span class="sparkline13-collapse-close"><i class="fa fa-times"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sparkline13-graph">
+                                    <div class="datatable-dashv1-list custom-datatable-overright">
+                                        <div id="toolbar">
+                                            <select class="form-control">
+                                                <option value="">Export Basic</option>
+                                                <option value="all">Export All</option>
+                                                <option value="selected">Export Selected</option>
+                                            </select>
+                                        </div>
+                                        <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"  data-key-events="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="state" data-checkbox="true"></th>
+                                                    <th data-field="id">ID</th>
+                                                    <th data-field="brand" data-editable="true">Brand</th>
+                                                    <th data-field="product" data-editable="true">Product</th>
+                                                    <th data-field="packing" data-editable="true">Packing</th>
+                                                    <th data-field="rate" data-editable="true">Rate</th>
+                                                    <th data-field="sgst" data-editable="true">GST</th>
+                                                    <th data-field="sgst" data-editable="true">SGST</th>
+                                                    <th data-field="sgst" data-editable="true">CGST</th>
+                                                    <th data-field="igst" data-editable="true">IGST</th>
+                                                    <th data-field="date" data-editable="true">Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>1</td>
+                                                    <td>Madhusudan</td>
+                                                    <td>Ghee</td>
+                                                    <td>1 Kg</td>
+                                                    <td>2000</td>
+                                                    <td>10%</td>
+                                                    <td>5%</td>
+                                                    <td>5%</td>
+                                                    <td>10%</td>
+                                                    <td>Jul 14, 2018</td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Static Table End -->
 <!-- Result Container  -->
 <div id="resultContainer" style="display: none;">
  <hr/>
@@ -648,7 +949,7 @@
     <!-- Chat Box End-->
     <!-- jquery
 		============================================ -->
-   <!-- <script src="resources/js/vendor/jquery-1.11.3.min.js"></script> -->
+    <script src="resources/js/vendor/jquery-1.11.3.min.js"></script>
     <!-- bootstrap JS
 		============================================ -->
     <script src="resources/js/bootstrap.min.js"></script>
@@ -668,45 +969,24 @@
 		============================================ -->
     <script src="resources/js/counterup/jquery.counterup.min.js"></script>
     <script src="resources/js/counterup/waypoints.min.js"></script>
-    <!-- modal JS
+    <!-- peity JS
 		============================================ -->
-    <script src="resources/js/modal-active.js"></script>
-    <!-- touchspin JS
+    <script src="resources/js/peity/jquery.peity.min.js"></script>
+    <script src="resources/js/peity/peity-active.js"></script>
+    <!-- sparkline JS
 		============================================ -->
-    <script src="resources/js/touchspin/jquery.bootstrap-touchspin.min.js"></script>
-    <script src="resources/js/touchspin/touchspin-active.js"></script>
-    <!-- colorpicker JS
+    <script src="resources/js/sparkline/jquery.sparkline.min.js"></script>
+    <script src="resources/js/sparkline/sparkline-active.js"></script>
+    <!-- data table JS
 		============================================ -->
-    <script src="resources/js/colorpicker/jquery.spectrum.min.js"></script>
-    <script src="resources/js/colorpicker/color-picker-active.js"></script>
-    <!-- datapicker JS
-		============================================ -->
-    <script src="resources/js/datapicker/bootstrap-datepicker.js"></script>
-    <script src="resources/js/datapicker/datepicker-active.js"></script>
-    <!-- input-mask JS
-		============================================ -->
-    <script src="resources/js/input-mask/jasny-bootstrap.min.js"></script>
-    <!-- chosen JS
-		============================================ -->
-    <script src="resources/js/chosen/chosen.jquery.js"></script>
-    <script src="resources/js/chosen/chosen-active.js"></script>
-    <!-- select2 JS
-		============================================ -->
-    <script src="resources/js/select2/select2.full.min.js"></script>
-    <script src="resources/js/select2/select2-active.js"></script>
-    <!-- ionRangeSlider JS
-		============================================ -->
-    <script src="resources/js/ionRangeSlider/ion.rangeSlider.min.js"></script>
-    <script src="resources/js/ionRangeSlider/ion.rangeSlider.active.js"></script>
-    <!-- rangle-slider JS
-		============================================ -->
-    <script src="resources/js/rangle-slider/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="resources/js/rangle-slider/jquery-ui-touch-punch.min.js"></script>
-    <script src="resources/js/rangle-slider/rangle-active.js"></script>
-    <!-- knob JS
-		============================================ -->
-    <script src="resources/js/knob/jquery.knob.js"></script>
-    <script src="resources/js/knob/knob-active.js"></script>
+    <script src="resources/js/data-table/bootstrap-table.js"></script>
+    <script src="resources/js/data-table/tableExport.js"></script>
+    <script src="resources/js/data-table/data-table-active.js"></script>
+    <script src="resources/js/data-table/bootstrap-table-editable.js"></script>
+    <script src="resources/js/data-table/bootstrap-editable.js"></script>
+    <script src="resources/js/data-table/bootstrap-table-resizable.js"></script>
+    <script src="resources/js/data-table/colResizable-1.5.source.js"></script>
+    <script src="resources/js/data-table/bootstrap-table-export.js"></script>
     <!-- main JS
 		============================================ -->
     <script src="resources/js/main.js"></script>
@@ -718,54 +998,7 @@
   })
 </script>
 
-<script type="text/javascript">
-$('.clockpicker').clockpicker()
-	.find('input').change(function(){
-		console.log(this.value);
-	});
-$('#single-input').clockpicker({
-	placement: 'bottom',
-	align: 'right',
-	autoclose: true,
-	'default': '20:48'
-});
-$('.clockpicker-with-callbacks').clockpicker({
-		donetext: 'Done',
-		init: function() { 
-			console.log("colorpicker initiated");
-		},
-		beforeShow: function() {
-			console.log("before show");
-		},
-		afterShow: function() {
-			console.log("after show");
-		},
-		beforeHide: function() {
-			console.log("before hide");
-		},
-		afterHide: function() {
-			console.log("after hide");
-		},
-		beforeHourSelect: function() {
-			console.log("before hour selected");
-		},
-		afterHourSelect: function() {
-			console.log("after hour selected");
-		},
-		beforeDone: function() {
-			console.log("before done");
-		},
-		afterDone: function() {
-			console.log("after done");
-		}
-	})
-	.find('input').change(function(){
-		console.log(this.value);
-	});
-if (/Mobile/.test(navigator.userAgent)) {
-	$('input').prop('readOnly', true);
-}
-</script>
+
 
  	<script type="text/javascript">
 		$(function() {
