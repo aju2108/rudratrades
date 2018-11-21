@@ -48,6 +48,10 @@ CREATE TABLE public."packing"
 (
     id serial NOT NULL,
     name character varying(200),
+    createdDate date,
+    modifiedDate date,
+    createdBy INT,
+    modifiedBy INT,
     CONSTRAINT packing_pkey PRIMARY KEY (id)
 )
 WITH (
@@ -131,6 +135,25 @@ CREATE TABLE public."brand_product_packing_rate_tax_mapping"
     createdBy INT,
     modifiedBy INT,
     CONSTRAINT brand_product_packing_rate_tax_mapping_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+********************************************** Brand_Product_Packing_Mapping *****************************************************
+
+CREATE TABLE public."brand_product_packing_mapping"
+(
+    id serial NOT NULL,
+    brandId INT,
+    productId INT,
+    packingId INT,
+    createdDate date,
+    modifiedDate date,
+    createdBy INT,
+    modifiedBy INT,
+    CONSTRAINT brand_product_packing_mapping_pkey PRIMARY KEY (id)
 )
 WITH (
     OIDS = FALSE

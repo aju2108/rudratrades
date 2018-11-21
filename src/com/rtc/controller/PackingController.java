@@ -6,72 +6,72 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.rtc.beans.Packings;
+import com.rtc.model.BrandProductPackingMapping;
 import com.rtc.model.Packing;
+import com.rtc.service.PackingService;
 
 @Controller
 public class PackingController {
-	
-	@RequestMapping(value = "/getpacking")
-	public void getPacking(HttpServletRequest request, HttpServletResponse response) throws IOException {
-			//Integer brandId = Integer.parseInt(request.getParameter("brand"));
-			//Integer productId = Integer.parseInt(request.getParameter("product"));
-			List<Packing> listCatagory = new ArrayList<Packing>();
-			Packing p1 = new Packing();
-            p1.setId(1);
-            
-            Packing p2 = new Packing();
-            p2.setId(2);
-            
-            Packing p3 = new Packing();
-            p3.setId(3);
-            
-            Packing p4 = new Packing();
-            p4.setId(4);
-            
-			
-			String brandId = request.getParameter("brand");
-			String productId = request.getParameter("product");
-			if(productId.equalsIgnoreCase("Ghee")){
-				p1.setName("1Kg");
-				p2.setName("2Kg");
-				p3.setName("4Kg");
-				p4.setName("15Kg*1tin");
-			}else if(productId.equalsIgnoreCase("Butter")){
-				p1.setName("50gm");
-				p2.setName("100gm");
-				p3.setName("200gm");
-				p4.setName("250gm");
-			}
-			listCatagory.add(p1);
-            listCatagory.add(p2);
-            listCatagory.add(p3);
-            listCatagory.add(p4);
-            String json = new Gson().toJson(listCatagory);
- 
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(json);
-        
+
+	@Autowired
+	private PackingService packingService;
+
+	@RequestMapping(value = "/packings", method = RequestMethod.GET)
+	public ModelAndView packings(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("addPacking");
+		Packings packings = packingService.getPackings();
+		mav.addObject("packing", packings);
+		return mav;
 	}
 	
+	@RequestMapping(value = "/addpackings", method = RequestMethod.POST)
+	public ModelAndView addRates(@ModelAttribute("rates") Packings packings, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		ModelAndView mav = new ModelAndView("addPacking");
+		HttpSession session = request.getSession();
+		packingService.addPackings(packings, session);
+		Packings packingsss = packingService.getPackings();
+		mav.addObject("packing", packingsss);
+		return mav;
+	}
+
+	@RequestMapping(value = "/getpacking")
+	public void getPacking(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String brand = request.getParameter("brand");
+		String product = request.getParameter("product");
+		if(!StringUtils.isEmpty(brand) && !StringUtils.isEmpty(product)){
+			int brandId = Integer.parseInt(brand);
+			int productId = Integer.parseInt(product);
+			List<BrandProductPackingMapping> packingList = packingService.gePackingByBrandProduct(brandId, productId);
+			String json = new Gson().toJson(packingList);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+		}
+	}
+
 	@RequestMapping(value = "/gethsncode")
 	public void getHsnCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String text = "";
+		String hsnCode = "";
 		String productId = request.getParameter("product");
-		if(productId.equalsIgnoreCase("Ghee")){
-			text="HSN0402";
-		}else if(productId.equalsIgnoreCase("Butter")){
-			text="HSN0503";
+		if(!StringUtils.isEmpty(productId)){
+			hsnCode = packingService.getHSNCode(Integer.parseInt(productId));
 		}
-        response.setContentType("text/plain");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(text);
-        
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(hsnCode);
+
 	}
 
 }

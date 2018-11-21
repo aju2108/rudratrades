@@ -1,5 +1,7 @@
 package com.rtc.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -22,9 +24,9 @@ public class BrandProductPackingRateTaxMappingDAOImpl implements BrandProductPac
 	@Override
 	public BrandProductPackingRateTaxMapping getMappingByBrandProductPacking(int brandId, int productId, int packingId) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BrandProductPackingRateTaxMapping.class);
-		criteria.add(Restrictions.eq("brandId", brandId));
-		criteria.add(Restrictions.eq("productId", productId));
-		criteria.add(Restrictions.eq("packingId", packingId));
+		criteria.add(Restrictions.eq("brand.id", brandId));
+		criteria.add(Restrictions.eq("product.id", productId));
+		criteria.add(Restrictions.eq("packing.id", packingId));
 		BrandProductPackingRateTaxMapping brandProductPackingRateTaxMapping = (BrandProductPackingRateTaxMapping) criteria.uniqueResult();
 		return brandProductPackingRateTaxMapping;
 	}
@@ -33,6 +35,12 @@ public class BrandProductPackingRateTaxMappingDAOImpl implements BrandProductPac
 	public BrandProductPackingRateTaxMapping updateBrandProductPackingRateTaxMapping(BrandProductPackingRateTaxMapping brandProductPackingRateTaxMapping) {
 		sessionFactory.getCurrentSession().update(brandProductPackingRateTaxMapping);
 	    return brandProductPackingRateTaxMapping;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<BrandProductPackingRateTaxMapping> getAllRates() {
+		return sessionFactory.getCurrentSession().createQuery("from BrandProductPackingRateTaxMapping").list();
 	}
 
 }

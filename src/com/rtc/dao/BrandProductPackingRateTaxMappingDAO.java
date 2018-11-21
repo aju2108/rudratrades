@@ -1,5 +1,7 @@
 package com.rtc.dao;
 
+import java.util.List;
+
 import com.rtc.model.BrandProductPackingRateTaxMapping;
 
 public interface BrandProductPackingRateTaxMappingDAO {
@@ -10,4 +12,5 @@ public interface BrandProductPackingRateTaxMappingDAO {
 
 	public abstract BrandProductPackingRateTaxMapping updateBrandProductPackingRateTaxMapping(BrandProductPackingRateTaxMapping brandProductPackingRateTaxMapping);
 
+	public List<BrandProductPackingRateTaxMapping> getAllRates();
 }

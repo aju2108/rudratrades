@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js" lang="en">
 
@@ -76,7 +78,7 @@
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro">
                         <li class="nav-item">
-                            <a href="my.html" role="button" aria-expanded="false">
+                            <a href="${pageContext.request.contextPath}/dashboard" role="button" aria-expanded="false">
                             	<i class="fa big-icon fa-home"></i> 
                             		<span class="mini-dn">Home</span> 
                             </a>
@@ -109,6 +111,19 @@
                                 <a href="inbox.html" class="dropdown-item">Add Brand</a>
                                 <a href="view-mail.html" class="dropdown-item">View Brand</a>
                                 <a href="compose-mail.html" class="dropdown-item">Delete Brand</a>
+                            </div>
+                        </li>
+                        
+                        <li class="nav-item">
+	                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+		                        <i class="fa big-icon fa-envelope"></i> 
+		                        <span class="mini-dn">Packing</span> 
+		                        <span class="indicator-right-menu mini-dn">
+		                        	<i class="fa indicator-mn fa-angle-left"></i>
+		                        </span>
+		                        </a>
+                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                <a href="${pageContext.request.contextPath}/packings" class="dropdown-item">Add Packing</a>
                             </div>
                         </li>
                         
@@ -209,7 +224,7 @@
                             <div class="col-lg-6 col-md-1 col-sm-1 col-xs-12">
                                 <div class="header-top-menu tabl-d-n">
                                     <ul class="nav navbar-nav mai-top-nav">
-                                        <li class="nav-item"><a href="#" class="nav-link">Home</a>
+                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/dashboard" class="nav-link">Home</a>
                                         </li>
                                         <li class="nav-item"><a href="#" class="nav-link">About</a>
                                         </li>
@@ -301,8 +316,21 @@
 				                                <a href="compose-mail.html" class="dropdown-item">Delete Brand</a>
 				                            </div>
 				                        </li>
-				                        
-				                        <li class="nav-item">
+
+									<li class="nav-item"><a href="#" data-toggle="dropdown"
+										role="button" aria-expanded="false"
+										class="nav-link dropdown-toggle"> <i
+											class="fa big-icon fa-envelope"></i> <span class="mini-dn">Packing</span>
+											<span class="indicator-right-menu mini-dn"> <i
+												class="fa indicator-mn fa-angle-left"></i>
+										</span>
+									</a>
+										<div role="menu"
+											class="dropdown-menu left-menu-dropdown animated flipInX">
+											<a href="${pageContext.request.contextPath}/packings" class="dropdown-item">Add Packing</a>
+										</div></li>
+
+									<li class="nav-item">
 					                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
 						                        <i class="fa big-icon fa-envelope"></i> 
 						                        <span class="mini-dn">Customer</span> 
@@ -403,7 +431,7 @@
                                             <div class="touchspin-inner">
                                                 <label>Brand</label> 
                                                 <form:select class="form-control custom-select-value" id="brand" name="brand" path="brandId" placeholder="Select Brand" required="required">
-													<%-- <form:option value="" label="Select Brand"/> --%>
+													<form:option value="-1" label="Select Brand"/>
 													<form:options items="${showRates.brandsMap}"/>
 												</form:select>
                                             </div>
@@ -412,7 +440,7 @@
                                             <div class="touchspin-inner">
                                                 <label>Product</label> 
                                                 <form:select class="form-control custom-select-value" id="product" name="product" path="productId" placeholder="Select Product" required="required">
-													<%-- <form:option value="" label="Select Product"/> --%>
+													<form:option value="-1" label="Select Product"/>
 													<form:options items="${showRates.productsMap}"/>
 												</form:select>
 											</div>
@@ -421,9 +449,7 @@
                                             <div class="touchspin-inner">
                                                 <label>Packing</label> 
 												<form:select class="form-control custom-select-value" id="packing" name="packing" path="packingId" placeholder="Select Packing" required="required">
-													<%-- <form:option value="" label="Select Packing"/> --%>
-													<%-- <form:option value="" label="Select Packing"/> --%>
-													<form:options items="${showRates.packgingMap}"/>
+													<form:option value="-1" label="Select Packing"/>
 												</form:select>
                                             </div>
                                         </div>
@@ -436,73 +462,31 @@
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>GST</label> 
-                                                <form:input class="form-control" id="gst" path="gst" placeholder="Enter GST" />
+                                                <form:input class="form-control" id="gst" path="gst" placeholder="Enter GST" required="required"/>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>SGST</label> 
-                                                <form:input class="form-control" id="sgst" path="sgst" placeholder="Enter SGST" />
+                                                <form:input class="form-control" id="sgst" path="sgst" placeholder="Enter SGST" required="required"/>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>CGST</label> 
-                                                <form:input class="form-control" id="cgst" path="cgst" placeholder="Enter CGST" />
+                                                <form:input class="form-control" id="cgst" path="cgst" placeholder="Enter CGST" required="required"/>
                                             </div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>IGST</label> 
-                                                <form:input class="form-control" id="igst" path="igst" placeholder="Enter IGST" />
+                                                <form:input class="form-control" id="igst" path="igst" placeholder="Enter IGST" required="required"/>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <button type="submit" class="btn btn-custon-four btn-success">Submit</button>
-                                    <!-- <input type="submit" value="Submit" class="btn btn-custon-four btn-success">  -->
+                                    <input type="submit" value="Submit" class="btn btn-custon-four btn-success">
                                     </form:form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row" id="itemsListContainer" style="display: none;">
-                        <div class="col-lg-12">
-                            <div class="sparkline10-list shadow-reset mg-t-30">
-                                <div class="sparkline10-hd">
-                                    <div class="main-sparkline10-hd">
-                                        <h1>Items List</h1>
-                                        <div class="sparkline10-outline-icon">
-                                            <span class="sparkline10-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                            <span><i class="fa fa-wrench"></i></span>
-                                            <span class="sparkline10-collapse-close"><i class="fa fa-times"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-12">
-                                    <div class="table-responsive">
-                                      <table class="table" id="itemslisttable">
-                                        <thead>
-                                          <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">HSN Code</th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col" id="brandTHId">Brand</th>
-                                            <th scope="col">Packing</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Actions</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                      </table>
-                                    </div>
-                                </div>
-                                <div class="sparkline15-graph">
-                                    <br />
-                                    <button name="createBill" value="Create Bill" type="button" class="btn btn-custon-four btn-success"><a href="localBill">Local Bill</a></button>
                                 </div>
                             </div>
                         </div>
@@ -537,10 +521,9 @@
                                                 <option value="selected">Export Selected</option>
                                             </select>
                                         </div>
-                                        <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"  data-key-events="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
+                                        <table id="ratesTable" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"  data-key-events="true" data-resizable="true" data-cookie="true" data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true" data-toolbar="#toolbar">
                                             <thead>
                                                 <tr>
-                                                    <th data-field="state" data-checkbox="true"></th>
                                                     <th data-field="id">ID</th>
                                                     <th data-field="brand" data-editable="true">Brand</th>
                                                     <th data-field="product" data-editable="true">Product</th>
@@ -551,333 +534,27 @@
                                                     <th data-field="sgst" data-editable="true">CGST</th>
                                                     <th data-field="igst" data-editable="true">IGST</th>
                                                     <th data-field="date" data-editable="true">Date</th>
+                                                    <th data-field="date" data-editable="true">Actions</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td>1</td>
-                                                    <td>Madhusudan</td>
-                                                    <td>Ghee</td>
-                                                    <td>1 Kg</td>
-                                                    <td>2000</td>
-                                                    <td>10%</td>
-                                                    <td>5%</td>
-                                                    <td>5%</td>
-                                                    <td>10%</td>
-                                                    <td>Jul 14, 2018</td>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+											<tbody>
+												<c:forEach items="${ratesList}" var="rates">
+													<tr>
+														<td>${rates.id}</td>
+														<td>${rates.brand}</td>
+														<td>${rates.product}</td>
+														<td>${rates.packing}</td>
+														<td>${rates.rate}</td>
+														<td>${rates.gst} %</td>
+														<td>${rates.sgst} %</td>
+														<td>${rates.cgst} %</td>
+														<td>${rates.igst} %</td>
+														<td>${rates.date}</td>
+														<td>delete</td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
                                     </div>
                                 </div>
                             </div>
@@ -990,64 +667,127 @@
     <!-- main JS
 		============================================ -->
     <script src="resources/js/main.js"></script>
+	<script type="text/javascript">
+		i = 0;
+		$(document).ready(function() {
+			$('#gst').change(function() {
+				var gst = $('#gst').val();
+				$('#sgst').val(gst/2);
+				$('#cgst').val(gst/2);
+				$('#igst').val(gst);
+			});
+		});
+	</script>
+	
+	<script type="text/javascript">
+		$('#brand, #product').change(function() {
+			$.ajax({
+				type : "GET",
+				url : "getpacking",
+				async: false,
+				data : {
+					brand : $('#brand :selected').val(),
+					product : $('#product :selected').val()
+				},
+				success : function(data) {
+					var $packing = $('#packing');
+					$packing.find("option").remove();
+					$.each(data, function(index, packingList) {
+						$("<option>").val(packingList.packing.id).text(
+								packingList.packing.name).appendTo($packing);
+					});
+				}
+			});
+			
+			$.ajax({
+				type : "GET",
+				url : "ratebybrandproductpacking",
+				async: false,
+				data : {
+					brand : $('#brand :selected').val(),
+					product : $('#product :selected').val(),
+					packing : $('#packing :selected').val()
+				},
+				success : function(data) {
+					$('#rate').val('0.0');
+					$('#gst').val('0.0');
+					$('#cgst').val('0.0');
+					$('#sgst').val('0.0');
+					$('#igst').val('0.0');
+					$.each(data, function(key, value) {
+						if(key == 'Rate'){
+							$('#rate').val(value);
+						}else if(key == 'Rate'){
+							$('#rate').val(value);
+						}else if(key == 'GST'){
+							$('#gst').val(value);
+						}else if(key == 'CGST'){
+							$('#cgst').val(value);
+						}else if(key == 'SGST'){
+							$('#sgst').val(value);
+						}else if(key == 'IGST'){
+							$('#igst').val(value);
+						}
+					});
+				}
+			});
+		});
+	</script>
+	
+	<!-- <script type="text/javascript">
+		$('#brand, #product, #packing').change(function() {
+			$.ajax({
+				type : "GET",
+				url : "ratebybrandproductpacking",
+				data : {
+					brand : $('#brand :selected').val(),
+					product : $('#product :selected').val(),
+					packing : $('#packing :selected').val()
+				},
+				success : function(data) {
+					var $packing = $('#packing');
+					$packing.find("option").remove();
+					$.each(data, function(index, packingList) {
+						$("<option>").val(packingList.packing.id).text(
+								packingList.packing.name).appendTo($packing);
+					});
+				}
+			});
+		});
+	</script>--%>
 
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script>
-  $(function() {
-    $('#otherStateBill, #includeBrand, #fullPageBill').bootstrapToggle();
-  })
-</script>
-
-
-
- 	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(function() {
 			$('button[type=submit]').click(
 					function(e) {
 						e.preventDefault();
-						$('#itemslisttable tbody tr').remove();
-						var ischecked = $('#includeBrand').is(":checked");
-				        if (ischecked) {
-				        	$('#brandTHId').show();
-				        }else{
-				        	$('#brandTHId').hide();
-				        }
-						var str = $("#createbillForm").serialize();
+						$('#ratesTable tbody tr').remove();
 						var img = "<img src='resources/img/clear.png' />";
 						$.ajax({
 		                    type: "POST",
-		                    url: "submitBill",
-		                    data : $('form[name=createbillForm]').serialize(),
+		                    url: "addrates",
+		                    data : $('form[name=addRatesForm]').serialize(),
 		                    success: function(responseJson){
-								var $table = $("#itemslisttable tbody");
-								$('#itemsListContainer').show();
+								var $table = $("#ratesTable tbody");
 			                    $.each(responseJson, function(key, value) {    // Iterate over the JSON array.
-			                        if (value.brand != undefined) {
 			                        	$("<tr>").appendTo($table)
-			                        	.append($("<td>").text(key)) // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-				                        .append($("<td>").text(value.hsnCode))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.product))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.brand))
-				                        .append($("<td>").text(value.packing))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.quantity))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.unit))
+			                        	.append($("<td>").text(value.id)) // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
+				                        .append($("<td>").text(value.brand.name))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.product.name))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.packing.name))
+				                        .append($("<td>").text(value.rate))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.GST))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.SGST))
+				                        .append($("<td>").text(value.CGST))
+				                        .append($("<td>").text(value.IGST))
+				                        .append($("<td>").text(value.createdDate))
 				                        .append($("<td>"+img));
-		                            }else{
-		                            	$("<tr>").appendTo($table)   
-				                        .append($("<td>").text(key)) // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-				                        .append($("<td>").text(value.hsnCode))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.product))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.packing))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.quantity))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.unit))
-				                        .append($("<td>"+img));
-		                            }
 			                    });
 							}
 						})
 					});
 		});
-	</script>
+	</script> --%>
 	
 	<!-- <script type="text/javascript">
 	$includeBrand = $('#includeBrand');
@@ -1062,37 +802,6 @@
 		});
 	</script>  --%>
 	
-<!-- <script type="text/javascript">
-$product = $('#product');
-        $product.change (
-        var Con = confirm("are you sure ?");
-            if (Con == true) {
-            function() {
-                $.ajax({
-                    type: "GET",
-                    url: "getpacking",
-                    data: {brand: $('#brand :selected').val(), product: $('#product :selected').val()},
-                    success: function(data){
-                    	  var $packing = $('#packing');
-                    	  $packing.find("option").remove(); 
-                    	  $.each(data, function(index, category) {
-                              $("<option>").val(category.id).text(category.name).appendTo($packing);
-                          }); 
-                    }
-                });
-                $.ajax({
-                    type: "GET",
-                    url: "gethsncode",
-                    data: {product: $('#product :selected').val()},
-                    success: function(data){
-                    	  var $hsnCode = $('#hsnCode');
-                    	  $hsnCode.val(data);
-                    }
-                });
-            }
-        });
-    </script> --%>
-
 	<!-- <script type="text/javascript">
     $customer = $('#customer');
     $customer.change (

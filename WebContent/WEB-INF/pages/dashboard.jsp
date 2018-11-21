@@ -75,7 +75,7 @@
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro">
                         <li class="nav-item">
-                            <a href="my.html" role="button" aria-expanded="false">
+                            <a href="${pageContext.request.contextPath}/dashboard" role="button" aria-expanded="false">
                             	<i class="fa big-icon fa-home"></i> 
                             		<span class="mini-dn">Home</span> 
                             </a>
@@ -108,6 +108,19 @@
                                 <a href="inbox.html" class="dropdown-item">Add Brand</a>
                                 <a href="view-mail.html" class="dropdown-item">View Brand</a>
                                 <a href="compose-mail.html" class="dropdown-item">Delete Brand</a>
+                            </div>
+                        </li>
+                        
+                        <li class="nav-item">
+	                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+		                        <i class="fa big-icon fa-envelope"></i> 
+		                        <span class="mini-dn">Packing</span> 
+		                        <span class="indicator-right-menu mini-dn">
+		                        	<i class="fa indicator-mn fa-angle-left"></i>
+		                        </span>
+		                        </a>
+                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
+                                <a href="${pageContext.request.contextPath}/packings" class="dropdown-item">Add Packing</a>
                             </div>
                         </li>
                         
@@ -202,7 +215,7 @@
                             <div class="col-lg-6 col-md-1 col-sm-1 col-xs-12">
                                 <div class="header-top-menu tabl-d-n">
                                     <ul class="nav navbar-nav mai-top-nav">
-                                        <li class="nav-item"><a href="#" class="nav-link">Home</a>
+                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/dashboard" class="nav-link">Home</a>
                                         </li>
                                         <li class="nav-item"><a href="#" class="nav-link">About</a>
                                         </li>

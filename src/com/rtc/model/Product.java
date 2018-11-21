@@ -24,6 +24,13 @@ public class Product implements Serializable {
 
 	@Column
 	private String hsncode;
+	
+	public Product() {
+	}
+
+	public Product(int id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the id

@@ -12,8 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "brand_product_packing_rate_tax_mapping")
-public class BrandProductPackingRateTaxMapping {
+@Table(name = "brand_product_packing_mapping")
+public class BrandProductPackingMapping {
+
+	private static final long serialVersionUID = -3465813074586302847L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,21 +32,6 @@ public class BrandProductPackingRateTaxMapping {
 	@ManyToOne
 	@JoinColumn(name = "packingid")
 	private Packing packing;
-
-	@Column
-	private double rate;
-
-	@Column
-	private double GST;
-
-	@Column
-	private double SGST;
-
-	@Column
-	private double CGST;
-	
-	@Column
-	private double IGST;
 
 	@Column
 	private Date createdDate;
@@ -88,46 +75,6 @@ public class BrandProductPackingRateTaxMapping {
 
 	public void setPacking(Packing packing) {
 		this.packing = packing;
-	}
-
-	public double getRate() {
-		return rate;
-	}
-
-	public void setRate(double rate) {
-		this.rate = rate;
-	}
-
-	public double getGST() {
-		return GST;
-	}
-
-	public void setGST(double gST) {
-		GST = gST;
-	}
-
-	public double getSGST() {
-		return SGST;
-	}
-
-	public void setSGST(double sGST) {
-		SGST = sGST;
-	}
-
-	public double getCGST() {
-		return CGST;
-	}
-
-	public void setCGST(double cGST) {
-		CGST = cGST;
-	}
-
-	public double getIGST() {
-		return IGST;
-	}
-
-	public void setIGST(double iGST) {
-		IGST = iGST;
 	}
 
 	public Date getCreatedDate() {

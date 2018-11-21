@@ -1,17 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html class="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Advance Form Element | Adminpro - Admin Template</title>
+    <title>Data Table | Adminpro - Admin Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
 		============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="resources/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
     <!-- Google Fonts
 		============================================ -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i,800" rel="stylesheet">
@@ -23,7 +25,7 @@
     <link rel="stylesheet" href="resources/css/font-awesome.min.css">
     <!-- adminpro icon CSS
 		============================================ -->
-    <link rel="stylesheet" href="resources/css/adminpro-custon-icon.css">
+    <link rel="stylesheet" href="css/adminpro-custon-icon.css">
     <!-- meanmenu icon CSS
 		============================================ -->
     <link rel="stylesheet" href="resources/css/meanmenu.min.css">
@@ -33,34 +35,16 @@
     <!-- animate CSS
 		============================================ -->
     <link rel="stylesheet" href="resources/css/animate.css">
-    <!-- modals CSS
+    <!-- normalize CSS
 		============================================ -->
-    <link rel="stylesheet" href="resources/css/modals.css">
+    <link rel="stylesheet" href="resources/css/data-table/bootstrap-table.css">
+    <link rel="stylesheet" href="resources/css/data-table/bootstrap-editable.css">
     <!-- normalize CSS
 		============================================ -->
     <link rel="stylesheet" href="resources/css/normalize.css">
-    <!-- touchspin CSS
+    <!-- charts CSS
 		============================================ -->
-    <link rel="stylesheet" href="resources/css/touchspin/jquery.bootstrap-touchspin.min.css">
-    <!-- datapicker CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/datapicker/datepicker3.css">
-    <!-- forms CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/form/themesaller-forms.css">
-    <!-- colorpicker CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/colorpicker/colorpicker.css">
-    <!-- select2 CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/select2/select2.min.css">
-    <!-- chosen CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/chosen/bootstrap-chosen.css">
-    <!-- ionRangeSlider CSS
-		============================================ -->
-    <link rel="stylesheet" href="resources/css/ionRangeSlider/ion.rangeSlider.css">
-    <link rel="stylesheet" href="resources/css/ionRangeSlider/ion.rangeSlider.skinFlat.css">
+    <link rel="stylesheet" href="resources/css/c3.min.css">
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="resources/css/adminpro/style.css">
@@ -70,19 +54,6 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="resources/js/vendor/modernizr-2.8.3.min.js"></script>
-
-	<!-- clockpicker CSS
-		============================================ -->
-	<link rel="stylesheet" type="text/css" href="resources/css/timepicker/jquery-clockpicker.min.css">
-	<link rel="stylesheet" type="text/css" href="resources/css/timepicker/github.min.css">
-	
-	<!-- clockpicker JS
-		============================================ -->
-	<script type="text/javascript" src="resources/js/timepicker/highlight.min.js"></script>
-	<script type="text/javascript" src="resources/js/timepicker/jquery.min.js"></script>
-	<script type="text/javascript" src="resources/js/timepicker/jquery-clockpicker.min.js"></script>
-
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
 
 </head>
@@ -107,7 +78,7 @@
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro">
                         <li class="nav-item">
-                            <a href="${pageContext.request.contextPath}/dashboard" role="button" aria-expanded="false">
+                            <a href="my.html" role="button" aria-expanded="false">
                             	<i class="fa big-icon fa-home"></i> 
                             		<span class="mini-dn">Home</span> 
                             </a>
@@ -195,7 +166,7 @@
 		                        </span>
 		                        </a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="inbox.html" class="dropdown-item">Create Bill</a>
+                                <a href="${pageContext.request.contextPath}/createbill" class="dropdown-item">Create Bill</a>
                             </div>
                         </li>
                         
@@ -253,7 +224,7 @@
                             <div class="col-lg-6 col-md-1 col-sm-1 col-xs-12">
                                 <div class="header-top-menu tabl-d-n">
                                     <ul class="nav navbar-nav mai-top-nav">
-                                        <li class="nav-item"><a href="${pageContext.request.contextPath}/dashboard" class="nav-link">Home</a>
+                                        <li class="nav-item"><a href="#" class="nav-link">Home</a>
                                         </li>
                                         <li class="nav-item"><a href="#" class="nav-link">About</a>
                                         </li>
@@ -345,8 +316,21 @@
 				                                <a href="compose-mail.html" class="dropdown-item">Delete Brand</a>
 				                            </div>
 				                        </li>
-				                        
-				                        <li class="nav-item">
+
+									<li class="nav-item"><a href="#" data-toggle="dropdown"
+										role="button" aria-expanded="false"
+										class="nav-link dropdown-toggle"> <i
+											class="fa big-icon fa-envelope"></i> <span class="mini-dn">Packing</span>
+											<span class="indicator-right-menu mini-dn"> <i
+												class="fa indicator-mn fa-angle-left"></i>
+										</span>
+									</a>
+										<div role="menu"
+											class="dropdown-menu left-menu-dropdown animated flipInX">
+											<a href="${pageContext.request.contextPath}/packings" class="dropdown-item">Add Packing</a>
+										</div></li>
+
+									<li class="nav-item">
 					                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
 						                        <i class="fa big-icon fa-envelope"></i> 
 						                        <span class="mini-dn">Customer</span> 
@@ -370,7 +354,7 @@
 						                        </span>
 						                        </a>
 				                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-				                                <a href="${pageContext.request.contextPath}/showrates" class="dropdown-item">Add Products Rates</a>
+				                                <a href="inbox.html" class="dropdown-item">Add Products Rates</a>
 				                                <a href="view-mail.html" class="dropdown-item">View Products Rates</a>
 				                                <a href="compose-mail.html" class="dropdown-item">Update Products Rates</a>
 				                            </div>
@@ -385,7 +369,7 @@
 						                        </span>
 						                        </a>
 				                            <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-				                                <a href="${pageContext.request.contextPath}/createbill" class="dropdown-item">Create Bill</a>
+				                                <a href="inbox.html" class="dropdown-item">Create Bill</a>
 				                            </div>
 				                        </li>
 				                        
@@ -431,7 +415,7 @@
                             <div class="sparkline15-list shadow-reset mg-t-30">
                                 <div class="sparkline15-hd">
                                     <div class="main-sparkline15-hd">
-                                        <h1>Create Bill</h1>
+                                        <h1>Add Packing</h1>
                                         <div class="sparkline15-outline-icon">
                                             <span class="sparkline15-collapse-link"><i class="fa fa-chevron-up"></i></span>
                                             <span><i class="fa fa-wrench"></i></span>
@@ -440,23 +424,15 @@
                                     </div>
                                 </div>
                                 <div class="sparkline15-graph">
-                                <form:form method="POST" id="createbillForm" name="createbillForm" commandName="createbill" action="submitBill">
+                                <form:form method="POST" id="addPackingForm" name="addPackingForm" commandName="packing" action="addpackings">
                                     <div class="row">
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
-                                                <label>Customer</label> 
-												<form:select class="form-control custom-select-value" id="customer" name="customer" path="customerId" placeholder="Select Customer" required="required">
-													<form:option value="" label="Select Customer"/>
-													<form:options items="${createbill.customersMap}"/>
-												</form:select>
-											</div>
-                                        </div>
+                                        
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Brand</label> 
                                                 <form:select class="form-control custom-select-value" id="brand" name="brand" path="brandId" placeholder="Select Brand" required="required">
-													<form:option value="" label="Select Brand"/>
-													<form:options items="${createbill.brandsMap}"/>
+													<%-- <form:option value="" label="Select Brand"/> --%>
+													<form:options items="${packing.brandsMap}"/>
 												</form:select>
                                             </div>
                                         </div>
@@ -464,130 +440,20 @@
                                             <div class="touchspin-inner">
                                                 <label>Product</label> 
                                                 <form:select class="form-control custom-select-value" id="product" name="product" path="productId" placeholder="Select Product" required="required">
-													<form:option value="" label="Select Product"/>
-													<form:options items="${createbill.productsMap}"/>
+													<%-- <form:option value="" label="Select Product"/> --%>
+													<form:options items="${packing.productsMap}"/>
 												</form:select>
 											</div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
-                                                <label>HSN Code</label> 
-                                                <form:input class="form-control" id="hsnCode" path="hsnCode" placeholder="HSN Code" required="required" />
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
                                                 <label>Packing</label> 
-												<form:select class="form-control custom-select-value" id="packing" name="packing" path="packingId" placeholder="Select Packing" required="required">
-													<form:option value="" label="Select Packing"/>
-												</form:select>
+												 <form:input class="form-control" id="packing" path="packing" placeholder="Enter Packing" required="required" />
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
-                                                <label>Quantity</label> 
-												 <form:input class="form-control" id="quantity" path="quantity" placeholder="Select Quantity" required="required" />
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
-                                                <label>Vehicle No</label> 
-                                                <form:input class="form-control" path="vehicleNo" placeholder="Vehicle No" required="required"/>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-lg-4 mg-b-20 form-group data-custon-pick" id="data_1">
-                                            <div class="touchspin-inner">
-                                            	<label>Date</label>
-                                                <div class="input-group date">
-                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                        <form:input class="form-control" path="date" placeholder="Date" required="required" />
-                                                    </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
-                                                <label>Time</label> 
-                                                <div class="input-group clockpicker pull-center" data-placement="left" data-align="top" data-autoclose="true">
-													<form:input class="form-control" path="time" placeholder="Time" />
-													<span class="input-group-addon">
-														<span class="glyphicon glyphicon-time"></span>
-													</span>
-												</div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
-                                                <label>Bill Payment Type</label> 
-                                                <form:select class="form-control custom-select-value" name="billPaymentType" path="quantity" placeholder="Select Bill Payment Type" required="required">
-													<form:option value="" label="Select Bill Payment Type"/>
-													<form:option value="1" label="Credit"/>
-													<form:option value="2" label="Cash"/>
-												</form:select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-lg-8 mg-b-20 form-group data-custon-pick">
-                                                <div class="col-lg-4">
-                                                    <label>Create Other State Bill</label><br />
-                                                    <form:checkbox path="otherStateBill" id="otherStateBill"/>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label>Include Brand In Bill</label><br />
-                                                    <form:checkbox path="includeBrand" id="includeBrand"/>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <label>Create Full Page Bill</label><br />
-                                                    <form:checkbox path="fullPageBill" id="fullPageBill"/>
-                                                </div>
-                                        </div>
-
                                     </div>
-                                    <!-- <button type="submit" class="btn btn-custon-four btn-success">Submit</button>  -->
                                     <input type="submit" value="Submit" class="btn btn-custon-four btn-success">
                                     </form:form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row" id="itemsListContainer" style="display: none;">
-                        <div class="col-lg-12">
-                            <div class="sparkline10-list shadow-reset mg-t-30">
-                                <div class="sparkline10-hd">
-                                    <div class="main-sparkline10-hd">
-                                        <h1>Items List</h1>
-                                        <div class="sparkline10-outline-icon">
-                                            <span class="sparkline10-collapse-link"><i class="fa fa-chevron-up"></i></span>
-                                            <span><i class="fa fa-wrench"></i></span>
-                                            <span class="sparkline10-collapse-close"><i class="fa fa-times"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-12">
-                                    <div class="table-responsive">
-                                      <table class="table" id="itemslisttable">
-                                        <thead>
-                                          <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">HSN Code</th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col" id="brandTHId">Brand</th>
-                                            <th scope="col">Packing</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Actions</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody></tbody>
-                                      </table>
-                                    </div>
-                                </div>
-                                <div class="sparkline15-graph">
-                                    <br />
-                                    <button name="createBill" value="Create Bill" type="button" class="btn btn-custon-four btn-success"><a href="localBill">Local Bill</a></button>
                                 </div>
                             </div>
                         </div>
@@ -595,6 +461,8 @@
                 </div>
             </div>
             <!-- Basic Form End-->
+            
+            <!-- Breadcome End-->
 <!-- Result Container  -->
 <div id="resultContainer" style="display: none;">
  <hr/>
@@ -658,7 +526,7 @@
     <!-- Chat Box End-->
     <!-- jquery
 		============================================ -->
-   <!-- <script src="resources/js/vendor/jquery-1.11.3.min.js"></script> -->
+    <script src="resources/js/vendor/jquery-1.11.3.min.js"></script>
     <!-- bootstrap JS
 		============================================ -->
     <script src="resources/js/bootstrap.min.js"></script>
@@ -678,181 +546,62 @@
 		============================================ -->
     <script src="resources/js/counterup/jquery.counterup.min.js"></script>
     <script src="resources/js/counterup/waypoints.min.js"></script>
-    <!-- modal JS
+    <!-- peity JS
 		============================================ -->
-    <script src="resources/js/modal-active.js"></script>
-    <!-- touchspin JS
+    <script src="resources/js/peity/jquery.peity.min.js"></script>
+    <script src="resources/js/peity/peity-active.js"></script>
+    <!-- sparkline JS
 		============================================ -->
-    <script src="resources/js/touchspin/jquery.bootstrap-touchspin.min.js"></script>
-    <script src="resources/js/touchspin/touchspin-active.js"></script>
-    <!-- colorpicker JS
+    <script src="resources/js/sparkline/jquery.sparkline.min.js"></script>
+    <script src="resources/js/sparkline/sparkline-active.js"></script>
+    <!-- data table JS
 		============================================ -->
-    <script src="resources/js/colorpicker/jquery.spectrum.min.js"></script>
-    <script src="resources/js/colorpicker/color-picker-active.js"></script>
-    <!-- datapicker JS
-		============================================ -->
-    <script src="resources/js/datapicker/bootstrap-datepicker.js"></script>
-    <script src="resources/js/datapicker/datepicker-active.js"></script>
-    <!-- input-mask JS
-		============================================ -->
-    <script src="resources/js/input-mask/jasny-bootstrap.min.js"></script>
-    <!-- chosen JS
-		============================================ -->
-    <script src="resources/js/chosen/chosen.jquery.js"></script>
-    <script src="resources/js/chosen/chosen-active.js"></script>
-    <!-- select2 JS
-		============================================ -->
-    <script src="resources/js/select2/select2.full.min.js"></script>
-    <script src="resources/js/select2/select2-active.js"></script>
-    <!-- ionRangeSlider JS
-		============================================ -->
-    <script src="resources/js/ionRangeSlider/ion.rangeSlider.min.js"></script>
-    <script src="resources/js/ionRangeSlider/ion.rangeSlider.active.js"></script>
-    <!-- rangle-slider JS
-		============================================ -->
-    <script src="resources/js/rangle-slider/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="resources/js/rangle-slider/jquery-ui-touch-punch.min.js"></script>
-    <script src="resources/js/rangle-slider/rangle-active.js"></script>
-    <!-- knob JS
-		============================================ -->
-    <script src="resources/js/knob/jquery.knob.js"></script>
-    <script src="resources/js/knob/knob-active.js"></script>
+    <script src="resources/js/data-table/bootstrap-table.js"></script>
+    <script src="resources/js/data-table/tableExport.js"></script>
+    <script src="resources/js/data-table/data-table-active.js"></script>
+    <script src="resources/js/data-table/bootstrap-table-editable.js"></script>
+    <script src="resources/js/data-table/bootstrap-editable.js"></script>
+    <script src="resources/js/data-table/bootstrap-table-resizable.js"></script>
+    <script src="resources/js/data-table/colResizable-1.5.source.js"></script>
+    <script src="resources/js/data-table/bootstrap-table-export.js"></script>
     <!-- main JS
 		============================================ -->
     <script src="resources/js/main.js"></script>
 
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-    <script>
-  $(function() {
-    $('#otherStateBill, #includeBrand, #fullPageBill').bootstrapToggle();
-  })
-</script>
 
-<script type="text/javascript">
-$('.clockpicker').clockpicker()
-	.find('input').change(function(){
-		console.log(this.value);
-	});
-$('#single-input').clockpicker({
-	placement: 'bottom',
-	align: 'right',
-	autoclose: true,
-	'default': '20:48'
-});
-$('.clockpicker-with-callbacks').clockpicker({
-		donetext: 'Done',
-		init: function() { 
-			console.log("colorpicker initiated");
-		},
-		beforeShow: function() {
-			console.log("before show");
-		},
-		afterShow: function() {
-			console.log("after show");
-		},
-		beforeHide: function() {
-			console.log("before hide");
-		},
-		afterHide: function() {
-			console.log("after hide");
-		},
-		beforeHourSelect: function() {
-			console.log("before hour selected");
-		},
-		afterHourSelect: function() {
-			console.log("after hour selected");
-		},
-		beforeDone: function() {
-			console.log("before done");
-		},
-		afterDone: function() {
-			console.log("after done");
-		}
-	})
-	.find('input').change(function(){
-		console.log(this.value);
-	});
-if (/Mobile/.test(navigator.userAgent)) {
-	$('input').prop('readOnly', true);
-}
-</script>
-
- 	<script type="text/javascript">
- 	$("#createbillForm").submit(
+ 	<!-- <script type="text/javascript">
+		$(function() {
+			$('button[type=submit]').click(
 					function(e) {
 						e.preventDefault();
-						$('#itemslisttable tbody tr').remove();
-						var ischecked = $('#includeBrand').is(":checked");
-				        if (ischecked) {
-				        	$('#brandTHId').show();
-				        }else{
-				        	$('#brandTHId').hide();
-				        }
-						var str = $("#createbillForm").serialize();
+						$('#ratesTable tbody tr').remove();
 						var img = "<img src='resources/img/clear.png' />";
 						$.ajax({
 		                    type: "POST",
-		                    url: "submitBill",
-		                    data : $('form[name=createbillForm]').serialize(),
+		                    url: "addrates",
+		                    data : $('form[name=addRatesForm]').serialize(),
 		                    success: function(responseJson){
-								var $table = $("#itemslisttable tbody");
-								$('#itemsListContainer').show();
+								var $table = $("#ratesTable tbody");
 			                    $.each(responseJson, function(key, value) {    // Iterate over the JSON array.
-			                        if (value.brand != undefined) {
 			                        	$("<tr>").appendTo($table)
-			                        	.append($("<td>").text(key)) // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-				                        .append($("<td>").text(value.hsnCode))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.product))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.brand))
-				                        .append($("<td>").text(value.packing))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.quantity))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.unit))
+			                        	.append($("<td>").text(value.id)) // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
+				                        .append($("<td>").text(value.brand.name))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.product.name))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.packing.name))
+				                        .append($("<td>").text(value.rate))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.GST))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
+				                        .append($("<td>").text(value.SGST))
+				                        .append($("<td>").text(value.CGST))
+				                        .append($("<td>").text(value.IGST))
+				                        .append($("<td>").text(value.createdDate))
 				                        .append($("<td>"+img));
-		                            }else{
-		                            	$("<tr>").appendTo($table)   
-				                        .append($("<td>").text(key)) // Create HTML <tr> element, set its text content with currently iterated item and append it to the <table>.
-				                        .append($("<td>").text(value.hsnCode))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.product))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.packing))        // Create HTML <td> element, set its text content with id of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.quantity))      // Create HTML <td> element, set its text content with name of currently iterated product and append it to the <tr>.
-				                        .append($("<td>").text(value.unit))
-				                        .append($("<td>"+img));
-		                            }
 			                    });
 							}
 						})
 					});
-	</script>
-
-	<script type="text/javascript">
-	$('#brand, #product').change(function() {
-                $.ajax({
-                    type: "GET",
-                    async: false,
-                    url: "getpacking",
-                    data: {brand: $('#brand :selected').val(), product: $('#product :selected').val()},
-                    success: function(data){
-                    	  var $packing = $('#packing');
-                    	  $packing.find("option").remove(); 
-                    	  $.each(data, function(index, packingList) {
-      						$("<option>").val(packingList.packing.id).text(
-      								packingList.packing.name).appendTo($packing);
-      					});
-                    }
-                });
-                $.ajax({
-                    type: "GET",
-                    async: false,
-                    url: "gethsncode",
-                    data: {product: $('#product :selected').val()},
-                    success: function(data){
-                    	  var $hsnCode = $('#hsnCode');
-                    	  $hsnCode.val(data);
-                    }
-                });
-        });
-    </script>
-
+		});
+	</script> --%>
+	
 	<!-- <script type="text/javascript">
 	$includeBrand = $('#includeBrand');
 			$includeBrand.change(
@@ -866,6 +615,37 @@ if (/Mobile/.test(navigator.userAgent)) {
 		});
 	</script>  --%>
 	
+<!-- <script type="text/javascript">
+$product = $('#product');
+        $product.change (
+        var Con = confirm("are you sure ?");
+            if (Con == true) {
+            function() {
+                $.ajax({
+                    type: "GET",
+                    url: "getpacking",
+                    data: {brand: $('#brand :selected').val(), product: $('#product :selected').val()},
+                    success: function(data){
+                    	  var $packing = $('#packing');
+                    	  $packing.find("option").remove(); 
+                    	  $.each(data, function(index, category) {
+                              $("<option>").val(category.id).text(category.name).appendTo($packing);
+                          }); 
+                    }
+                });
+                $.ajax({
+                    type: "GET",
+                    url: "gethsncode",
+                    data: {product: $('#product :selected').val()},
+                    success: function(data){
+                    	  var $hsnCode = $('#hsnCode');
+                    	  $hsnCode.val(data);
+                    }
+                });
+            }
+        });
+    </script> --%>
+
 	<!-- <script type="text/javascript">
     $customer = $('#customer');
     $customer.change (

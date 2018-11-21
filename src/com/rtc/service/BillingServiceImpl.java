@@ -1,7 +1,5 @@
 package com.rtc.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,12 +32,13 @@ public class BillingServiceImpl implements BillingService {
 
 	@Autowired
 	private PackingService packingService;
-
+/*
 	@Autowired
 	private QuantityService quantityService;
 
 	@Autowired
 	private UnitService unitService;
+	 */
 
 	@Autowired
 	private BrandService brandService;
@@ -50,10 +49,9 @@ public class BillingServiceImpl implements BillingService {
 	@Override
 	public Billing renderBill() {
 		Billing billing = new Billing();
-		billing.setHsnCode("0402");
-		billing.setQuantity(1);
+		//billing.setHsnCode("0402");
+		//billing.setQuantity(1);
 		setBillingMaps(billing);
-		billing.setButtonName("Submit");
 		return billing;
 	}
 
@@ -67,35 +65,39 @@ public class BillingServiceImpl implements BillingService {
 		//String dateTime = simpleDateFormater.format(billing.getDate()) + " " + simpleTimeFormater.format(time);
 
 		Map<Integer, Billing> billMap = new HashMap<Integer, Billing>();
+		
+		BrandProductPackingRateTaxMapping bpprtm = brandProductPackingRateTaxMappingService
+				.getMappingByBrandProductPacking(billing.getBrandId(), billing.getProductId(), billing.getPackingId());
+		if (!StringUtils.isEmpty(bpprtm)) {
 
-		setBillingMaps(billing);
+			setBillingMaps(billing);
 
-		Billing billview = new Billing();
-		billview.setCustomer(billing.getCustomersMap().get(billing.getCustomerId()));
-		billview.setProduct(billing.getProductsMap().get(billing.getProductId()));
-		billview.setProductId(billing.getProductId());
-		billview.setHsnCode(billing.getHsnCode());
-		if(billing.isIncludeBrand()){
-			billview.setBrand(billing.getBrandsMap().get(billing.getBrandId()));
-		}
-		billview.setBrandId(billing.getBrandId());
-		billview.setPacking(billing.getPackgingMap().get(billing.getPackingId()));
-		billview.setPackingId(billing.getPackingId());
-		billview.setQuantity(billing.getQuantity());
-		billview.setUnit(billing.getUnit());
-		billview.setDate(billing.getDate());
-		billview.setBillPaymentType(billing.getBillPaymentType());
-		billview.setVehicleNo(billing.getVehicleNo());
+			Billing billview = new Billing();
+			billview.setCustomer(billing.getCustomersMap().get(billing.getCustomerId()));
+			billview.setProduct(billing.getProductsMap().get(billing.getProductId()));
+			billview.setProductId(billing.getProductId());
+			billview.setHsnCode(billing.getHsnCode());
+			if (billing.isIncludeBrand()) {
+				billview.setBrand(billing.getBrandsMap().get(billing.getBrandId()));
+			}
+			billview.setBrandId(billing.getBrandId());
+			billview.setPacking(billing.getPackgingMap().get(billing.getPackingId()));
+			billview.setPackingId(billing.getPackingId());
+			billview.setQuantity(billing.getQuantity());
+			billview.setUnit(billing.getUnit());
+			billview.setDate(billing.getDate());
+			billview.setBillPaymentType(billing.getBillPaymentType());
+			billview.setVehicleNo(billing.getVehicleNo());
 
-		if (StringUtils.isEmpty(session.getAttribute("billMap"))) {
-			billMap.put(billing.getBillMap().size() + 1, billview);
-		} else {
-			Map<Integer, Billing> sessionBillMap = (Map<Integer, Billing>) session.getAttribute("billMap");
-			billMap.putAll(sessionBillMap);
-			billMap.put(sessionBillMap.size() + 1, billview);
+			if (StringUtils.isEmpty(session.getAttribute("billMap"))) {
+				billMap.put(billing.getBillMap().size() + 1, billview);
+			} else {
+				Map<Integer, Billing> sessionBillMap = (Map<Integer, Billing>) session.getAttribute("billMap");
+				billMap.putAll(sessionBillMap);
+				billMap.put(sessionBillMap.size() + 1, billview);
+			}
 		}
 		session.setAttribute("billMap", billMap);
-
 		return billMap;
 	}
 
@@ -181,17 +183,14 @@ public class BillingServiceImpl implements BillingService {
 	public Map<Integer, String> constructPackingMap(List<Packing> packings) {
 		return packings.stream().collect(Collectors.toMap(Packing::getId, Packing::getName));
 	}
-
 	/*
-	 * public Map<String,String> constructQuantityMap(List<Quantity> quantities)
-	 * { return quantities.stream() .collect(Collectors.toMap(Quantity ::
-	 * getName, Quantity :: getName)); }
-	 */
-
-	/*
-	 * public Map<Integer, String> constructUnitMap(List<Unit> units) { return
-	 * units.stream() .collect(Collectors.toMap(Unit :: getName, Unit ::
-	 * getName)); }
-	 */
+	 public Map<String,String> constructQuantityMap(List<Quantity> quantities) { 
+	 	return quantities.stream() .collect(Collectors.toMap(Quantity :: getName, Quantity :: getName)); 
+	 }
+	
+	 public Map<Integer, String> constructUnitMap(List<Unit> units) { 
+	 	return units.stream() .collect(Collectors.toMap(Unit :: getName, Unit :: getName)); 
+	 }
+	*/
 
 }

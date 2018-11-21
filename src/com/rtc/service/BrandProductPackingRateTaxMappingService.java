@@ -1,5 +1,7 @@
 package com.rtc.service;
 
+import java.util.List;
+
 import com.rtc.model.BrandProductPackingRateTaxMapping;
 
 public interface BrandProductPackingRateTaxMappingService {
@@ -10,4 +12,5 @@ public interface BrandProductPackingRateTaxMappingService {
 
 	public abstract BrandProductPackingRateTaxMapping updateBrand(BrandProductPackingRateTaxMapping brandProductPackingRateTaxMapping);
 
+	public List<BrandProductPackingRateTaxMapping> getAllRates();
 }

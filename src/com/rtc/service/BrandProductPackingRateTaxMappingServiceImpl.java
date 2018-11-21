@@ -1,5 +1,7 @@
 package com.rtc.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,21 +17,22 @@ public class BrandProductPackingRateTaxMappingServiceImpl implements BrandProduc
 	BrandProductPackingRateTaxMappingDAO brandProductPackingRateTaxMappingDAO;
 
 	@Override
-	public void addBrandProductPackingRateTaxMapping(
-			BrandProductPackingRateTaxMapping brandProductPackingRateTaxMapping) {
+	public void addBrandProductPackingRateTaxMapping(BrandProductPackingRateTaxMapping brandProductPackingRateTaxMapping) {
 		brandProductPackingRateTaxMappingDAO.addBrandProductPackingRateTaxMapping(brandProductPackingRateTaxMapping);
 	}
 
 	@Override
-	public BrandProductPackingRateTaxMapping getMappingByBrandProductPacking(int brandId, int productId,
-			int packingId) {
+	public BrandProductPackingRateTaxMapping getMappingByBrandProductPacking(int brandId, int productId, int packingId) {
 		return brandProductPackingRateTaxMappingDAO.getMappingByBrandProductPacking(brandId, productId, packingId);
 	}
 
 	@Override
-	public BrandProductPackingRateTaxMapping updateBrand(
-			BrandProductPackingRateTaxMapping brandProductPackingRateTaxMapping) {
+	public BrandProductPackingRateTaxMapping updateBrand(BrandProductPackingRateTaxMapping brandProductPackingRateTaxMapping) {
 		return brandProductPackingRateTaxMappingDAO.updateBrandProductPackingRateTaxMapping(brandProductPackingRateTaxMapping);
 	}
 
+	@Override
+	public List<BrandProductPackingRateTaxMapping> getAllRates() {
+		return brandProductPackingRateTaxMappingDAO.getAllRates();
+	}
 }
