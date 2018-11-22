@@ -7,29 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "brand_product_packing_mapping")
-public class BrandProductPackingMapping {
+@Table(name = "payment_type")
+public class PaymentType {
+	
+	private static final long serialVersionUID = -3465813074586302847L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne
-	@JoinColumn(name = "brandid")
-	private Brand brand;
-
-	@ManyToOne
-	@JoinColumn(name = "productid")
-	private Product product;
-
-	@ManyToOne
-	@JoinColumn(name = "packingid")
-	private Packing packing;
+	@Column
+	private String name;
 
 	@Column
 	private Date createdDate;
@@ -51,28 +42,12 @@ public class BrandProductPackingMapping {
 		this.id = id;
 	}
 
-	public Brand getBrand() {
-		return brand;
+	public String getName() {
+		return name;
 	}
 
-	public void setBrand(Brand brand) {
-		this.brand = brand;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public Packing getPacking() {
-		return packing;
-	}
-
-	public void setPacking(Packing packing) {
-		this.packing = packing;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getCreatedDate() {

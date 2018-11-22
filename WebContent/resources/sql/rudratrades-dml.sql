@@ -113,6 +113,14 @@ INSERT INTO public.brand_product_packing_rate_tax_mapping(
 INSERT INTO public.brand_product_packing_rate_tax_mapping(
 	brandid, productid, packingid, rate, gst, cgst, igst, createdDate, modifiedDate)
 	VALUES (3, 2, 3, 300, 30, 10, 10, current_timestamp, current_timestamp);
+	
+********************************************** Payment Type *****************************************************
+	
+INSERT INTO public.payment_type(name, createddate, modifieddate, createdby, modifiedby)
+    VALUES ('Credit', current_timestamp, current_timestamp, 1, 1);
+
+INSERT INTO public.payment_type(name, createddate, modifieddate, createdby, modifiedby)
+    VALUES ('Cash', current_timestamp, current_timestamp, 1, 1);
     
 
 ********************************************** Stocks *****************************************************

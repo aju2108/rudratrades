@@ -520,10 +520,9 @@
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Bill Payment Type</label> 
-                                                <form:select class="form-control custom-select-value" name="billPaymentType" path="quantity" placeholder="Select Bill Payment Type" required="required">
-													<form:option value="" label="Select Bill Payment Type"/>
-													<form:option value="1" label="Credit"/>
-													<form:option value="2" label="Cash"/>
+                                                <form:select class="form-control custom-select-value" name="billPaymentType" path="billPaymentTypeId" placeholder="Select Bill Payment Type" required="required">
+													<form:option value="" label="Select Payment Type"/>
+													<form:options items="${createbill.paymentTypeMap}"/>
 												</form:select>
                                             </div>
                                         </div>

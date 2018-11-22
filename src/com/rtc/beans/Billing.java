@@ -38,6 +38,7 @@ public class Billing extends BillDetails {
 	private Integer productId;
 	private Integer brandId;
 	private Integer packingId;
+	private Integer billPaymentTypeId;
 
 	/**
 	 * @return the billDetails
@@ -58,9 +59,9 @@ public class Billing extends BillDetails {
 	Map<Integer, String> productsMap = new HashMap<Integer, String>();
 	Map<Integer, String> brandsMap = new HashMap<Integer, String>();
 	Map<Integer, String> packgingMap = new HashMap<Integer, String>();
-	// Map<String, String> quantityMap = new HashMap<String, String>();
-	// Map<String, String> unitMap = new HashMap<String, String>();
+	Map<Integer, String> paymentTypeMap = new HashMap<Integer, String>();
 	Map<Integer, Billing> billMap = new HashMap<Integer, Billing>();
+	// Map<String, String> quantityMap = new HashMap<String, String>();
 
 	public String getCustomer() {
 		return customer;
@@ -274,21 +275,15 @@ public class Billing extends BillDetails {
 	// {
 	// this.quantityMap = quantityMap;
 	// }
-	//
-	//
-	//
-	// public Map<String, String> getUnitMap()
-	// {
-	// return unitMap;
-	// }
-	//
-	//
-	//
-	// public void setUnitMap(Map<String, String> unitMap)
-	// {
-	// this.unitMap = unitMap;
-	// }
 
+	public Map<Integer, String> getPaymentTypeMap() {
+		return paymentTypeMap;
+	}
+
+	public void setPaymentTypeMap(Map<Integer, String> paymentTypeMap) {
+		this.paymentTypeMap = paymentTypeMap;
+	}
+	
 	public Map<Integer, Billing> getBillMap() {
 		return billMap;
 	}
@@ -328,4 +323,13 @@ public class Billing extends BillDetails {
 	public void setPackingId(Integer packingId) {
 		this.packingId = packingId;
 	}
+
+	public Integer getBillPaymentTypeId() {
+		return billPaymentTypeId;
+	}
+
+	public void setBillPaymentTypeId(Integer billPaymentTypeId) {
+		this.billPaymentTypeId = billPaymentTypeId;
+	}
+	
 }

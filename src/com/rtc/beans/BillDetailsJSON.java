@@ -17,6 +17,8 @@ public class BillDetailsJSON {
 	private double cgst;
 	private double igst;
 	private String netAmountInWords;
+	private String date;
+	private String time;
 	
 	public BillDetailsJSON() {}
 
@@ -100,11 +102,28 @@ public class BillDetailsJSON {
 		this.billPaymentType = billPaymentType;
 	}
 
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
 	@Override
 	public String toString() {
-		return "BillDetailsJSON [customer=" + customer + ", billDetailsMap=" + billDetailsMap + ", total=" + total
-				+ ", netAmount=" + netAmount + ", sgst=" + sgst + ", cgst=" + cgst + ", igst=" + igst
-				+ ", netAmountInWords=" + netAmountInWords + "]";
+		return "BillDetailsJSON [customer=" + customer + ", billDetailsMap=" + billDetailsMap + ", vehicleNo="
+				+ vehicleNo + ", billPaymentType=" + billPaymentType + ", total=" + total + ", netAmount=" + netAmount
+				+ ", sgst=" + sgst + ", cgst=" + cgst + ", igst=" + igst + ", netAmountInWords=" + netAmountInWords
+				+ ", date=" + date + ", time=" + time + "]";
 	}
 
 }

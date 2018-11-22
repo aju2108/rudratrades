@@ -230,7 +230,7 @@ row {
 							<span style="margin-bottom: 20px;">
 								<div class="topCenterDiv">
 									<h3>
-										<span>Cash</span>
+										<span>${viewBill.billPaymentType}</span>
 									</h3>
 								</div>
 								<div class="topRightDiv">
@@ -271,8 +271,8 @@ row {
 					</div>
 
 					<div class="col-xs-6 text-right">
-						<strong>Date : </strong>12 Dec 2018<br> <strong>
-						Vehical No : </strong>${users.vehicleno}<br>
+						<strong>Date : </strong>${viewBill.date}, ${viewBill.time}<br> <strong>
+						Vehical No : </strong>${viewBill.vehicleNo}<br>
 					</div>
 				</div>
 			</div>

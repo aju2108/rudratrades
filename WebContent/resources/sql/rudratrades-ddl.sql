@@ -160,6 +160,23 @@ WITH (
 )
 TABLESPACE pg_default;
 
+********************************************** Payment Type *****************************************************
+
+CREATE TABLE public."payment_type"
+(
+    id serial NOT NULL,
+    name character varying(20),
+    createdDate date,
+    modifiedDate date,
+    createdBy INT,
+    modifiedBy INT,
+    CONSTRAINT payment_type_pkey PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
 ********************************************** Billing *****************************************************
 CREATE TABLE public."billing"
 (

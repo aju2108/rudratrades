@@ -1,5 +1,6 @@
 package com.rtc.service;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,12 @@ import org.springframework.util.StringUtils;
 import com.rtc.beans.BillDetails;
 import com.rtc.beans.BillDetailsJSON;
 import com.rtc.beans.Billing;
+import com.rtc.dao.PaymentTypeDAO;
 import com.rtc.model.Brand;
 import com.rtc.model.BrandProductPackingRateTaxMapping;
 import com.rtc.model.Customer;
 import com.rtc.model.Packing;
+import com.rtc.model.PaymentType;
 import com.rtc.model.Product;
 import com.rtc.util.EnglishNumberToWords;
 
@@ -35,10 +38,9 @@ public class BillingServiceImpl implements BillingService {
 /*
 	@Autowired
 	private QuantityService quantityService;
-
+*/
 	@Autowired
-	private UnitService unitService;
-	 */
+	private PaymentTypeService paymentTypeService;
 
 	@Autowired
 	private BrandService brandService;
@@ -49,8 +51,6 @@ public class BillingServiceImpl implements BillingService {
 	@Override
 	public Billing renderBill() {
 		Billing billing = new Billing();
-		//billing.setHsnCode("0402");
-		//billing.setQuantity(1);
 		setBillingMaps(billing);
 		return billing;
 	}
@@ -86,7 +86,8 @@ public class BillingServiceImpl implements BillingService {
 			billview.setQuantity(billing.getQuantity());
 			billview.setUnit(billing.getUnit());
 			billview.setDate(billing.getDate());
-			billview.setBillPaymentType(billing.getBillPaymentType());
+			billview.setTime(billing.getTime());
+			billview.setBillPaymentType(billing.getPaymentTypeMap().get(billing.getBillPaymentTypeId()));
 			billview.setVehicleNo(billing.getVehicleNo());
 
 			if (StringUtils.isEmpty(session.getAttribute("billMap"))) {
@@ -103,6 +104,7 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	public BillDetailsJSON createBill(HttpSession session) {
+		SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MMM-yyyy");
 		Map<Integer, Billing> billMap = new HashMap<Integer, Billing>();
 		if (!StringUtils.isEmpty(session.getAttribute("billMap"))) {
 			billMap = (Map<Integer, Billing>) session.getAttribute("billMap");
@@ -115,6 +117,8 @@ public class BillingServiceImpl implements BillingService {
 		invoice.setCustomer(customer);
 		invoice.setVehicleNo(billMap.get(1).getVehicleNo());
 		invoice.setBillPaymentType(billMap.get(1).getBillPaymentType());
+		invoice.setDate(dateFormater.format(billMap.get(1).getDate()));
+		invoice.setTime(billMap.get(1).getTime());
 		Map<Integer, BillDetails> billDetailsMap = new HashMap<Integer, BillDetails>();
 
 		billMap.entrySet().parallelStream().forEach(entry -> {
@@ -156,13 +160,14 @@ public class BillingServiceImpl implements BillingService {
 		List<Product> productsList = productService.getAllProducts();
 		List<Brand> brandList = brandService.getAllBrands();
 		List<Packing> packingList = packingService.getAllPackings();
-		// List<Quantity> quantityList = quantityService.getAllQuantities();
+		List<PaymentType> paymentTypeList = paymentTypeService.getAllPaymentTypes();
 		// List<Unit> unitList = unitService.getAllUnit();
 
 		billing.setCustomersMap(constructCUstomerMap(customersList));
 		billing.setProductsMap(constructProductMap(productsList));
 		billing.setBrandsMap(constructBrandMap(brandList));
 		billing.setPackgingMap(constructPackingMap(packingList));
+		billing.setPaymentTypeMap(constructPaymentTypeMap(paymentTypeList));
 		// billing.setQuantityMap(constructQuantityMap(quantityList));
 		// billing.setUnitMap(constructUnitMap(unitList));
 
@@ -183,11 +188,11 @@ public class BillingServiceImpl implements BillingService {
 	public Map<Integer, String> constructPackingMap(List<Packing> packings) {
 		return packings.stream().collect(Collectors.toMap(Packing::getId, Packing::getName));
 	}
-	/*
-	 public Map<String,String> constructQuantityMap(List<Quantity> quantities) { 
-	 	return quantities.stream() .collect(Collectors.toMap(Quantity :: getName, Quantity :: getName)); 
-	 }
 	
+	 public Map<Integer, String> constructPaymentTypeMap(List<PaymentType> quantities) { 
+	 	return quantities.stream() .collect(Collectors.toMap(PaymentType :: getId, PaymentType :: getName)); 
+	 }
+	 /*
 	 public Map<Integer, String> constructUnitMap(List<Unit> units) { 
 	 	return units.stream() .collect(Collectors.toMap(Unit :: getName, Unit :: getName)); 
 	 }
