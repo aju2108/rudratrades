@@ -58,20 +58,13 @@ public class BillingServiceImpl implements BillingService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<Integer, Billing> submitBill(Billing billing, HttpSession session) {
-		
-		//SimpleDateFormat simpleDateFormater = new SimpleDateFormat("dd-MMM-yyyy");
-		//SimpleDateFormat simpleTimeFormater = new SimpleDateFormat("hh:mm a");
-		//Date time = new Date(System.currentTimeMillis());
-		//String dateTime = simpleDateFormater.format(billing.getDate()) + " " + simpleTimeFormater.format(time);
-
+		Integer mapKey = 0;
 		Map<Integer, Billing> billMap = new HashMap<Integer, Billing>();
 		
 		BrandProductPackingRateTaxMapping bpprtm = brandProductPackingRateTaxMappingService
 				.getMappingByBrandProductPacking(billing.getBrandId(), billing.getProductId(), billing.getPackingId());
 		if (!StringUtils.isEmpty(bpprtm)) {
-
 			setBillingMaps(billing);
-
 			Billing billview = new Billing();
 			billview.setCustomer(billing.getCustomersMap().get(billing.getCustomerId()));
 			billview.setProduct(billing.getProductsMap().get(billing.getProductId()));
@@ -91,12 +84,14 @@ public class BillingServiceImpl implements BillingService {
 			billview.setVehicleNo(billing.getVehicleNo());
 
 			if (StringUtils.isEmpty(session.getAttribute("billMap"))) {
-				billMap.put(billing.getBillMap().size() + 1, billview);
+				mapKey = billing.getBillMap().size() + 1;
 			} else {
 				Map<Integer, Billing> sessionBillMap = (Map<Integer, Billing>) session.getAttribute("billMap");
 				billMap.putAll(sessionBillMap);
-				billMap.put(sessionBillMap.size() + 1, billview);
+				mapKey = sessionBillMap.size() + 1;
 			}
+			billMap.put(mapKey, billview);
+			System.out.println("Map Key : "+mapKey);
 		}
 		session.setAttribute("billMap", billMap);
 		return billMap;
@@ -105,52 +100,59 @@ public class BillingServiceImpl implements BillingService {
 	@Override
 	public BillDetailsJSON createBill(HttpSession session) {
 		SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MMM-yyyy");
-		Map<Integer, Billing> billMap = new HashMap<Integer, Billing>();
-		if (!StringUtils.isEmpty(session.getAttribute("billMap"))) {
-			billMap = (Map<Integer, Billing>) session.getAttribute("billMap");
-		}
-		Customer customer = customerService.getCustomer(billMap.get(1).getCustomer());
-		// billing.setDateTime(billMap.get(1).getDateTime());
-		// billing.setCustomerObj(customer);
-
 		BillDetailsJSON invoice = new BillDetailsJSON();
-		invoice.setCustomer(customer);
-		invoice.setVehicleNo(billMap.get(1).getVehicleNo());
-		invoice.setBillPaymentType(billMap.get(1).getBillPaymentType());
-		invoice.setDate(dateFormater.format(billMap.get(1).getDate()));
-		invoice.setTime(billMap.get(1).getTime());
-		Map<Integer, BillDetails> billDetailsMap = new HashMap<Integer, BillDetails>();
+		Map<Integer, Billing> billMap = (Map<Integer, Billing>) session.getAttribute("billMap");
+		if (!billMap.isEmpty()) {
+			
+			Customer customer = customerService.getCustomer(billMap.get(1).getCustomer());
+			
+			invoice.setCustomer(customer);
+			invoice.setVehicleNo(billMap.get(1).getVehicleNo());
+			invoice.setBillPaymentType(billMap.get(1).getBillPaymentType());
+			invoice.setDate(dateFormater.format(billMap.get(1).getDate()));
+			invoice.setTime(billMap.get(1).getTime());
+			Map<Integer, BillDetails> billDetailsMap = new HashMap<Integer, BillDetails>();
+			for(Map.Entry<Integer, Billing> entry : billMap.entrySet()){
+			//billMap.entrySet().parallelStream().forEach(entry -> {
+				Billing billing = entry.getValue();
 
-		billMap.entrySet().parallelStream().forEach(entry -> {
-			Billing billing = entry.getValue();
+				BillDetails billDetails = new BillDetails();
 
-			BillDetails billDetails = new BillDetails();
+				billDetails.setProduct(billing.getProduct());
+				billDetails.setBrand(billing.getBrand());
+				billDetails.setHsnCode(billing.getHsnCode());
+				billDetails.setPacking(billing.getPacking());
+				billDetails.setQuantity(billing.getQuantity());
 
-			billDetails.setProduct(billing.getProduct());
-			billDetails.setBrand(billing.getBrand());
-			billDetails.setHsnCode(billing.getHsnCode());
-			billDetails.setPacking(billing.getPacking());
-			billDetails.setQuantity(billing.getQuantity());
-
-			//int productId = productService.getProductByName(billing.getProduct()).getId();
-			//int packingId = packingService.getPackingByName(billing.getPacking()).getId();
-			//int brandId = brandService.getBrandByName(billing.getBrand()).getId();
-
-			BrandProductPackingRateTaxMapping bpprtm = brandProductPackingRateTaxMappingService
-					.getMappingByBrandProductPacking(billing.getBrandId(), billing.getProductId(), billing.getPackingId());
-			double amount = Double.valueOf(billing.getQuantity() * bpprtm.getRate());
-			billDetails.setRate(bpprtm.getRate());
-			billDetails.setAmount(amount);
-			billDetails.setGst(bpprtm.getGST());
-			invoice.setTotal(invoice.getTotal() + amount);
-			double sgst_cgst = (invoice.getSgst() + ((amount * bpprtm.getGST()) / 100));
-			invoice.setSgst(invoice.getSgst() + (sgst_cgst / 2));
-			invoice.setCgst(invoice.getCgst() + (sgst_cgst / 2));
-			invoice.setNetAmount(invoice.getNetAmount() + invoice.getTotal() + invoice.getSgst() + invoice.getCgst());
-			billDetailsMap.put(entry.getKey(), billDetails);
-		});
-		invoice.setBillDetailsMap(billDetailsMap);
-		invoice.setNetAmountInWords(EnglishNumberToWords.convert(new Double(invoice.getNetAmount()).longValue()));
+				BrandProductPackingRateTaxMapping bpprtm = brandProductPackingRateTaxMappingService
+						.getMappingByBrandProductPacking(billing.getBrandId(), billing.getProductId(), billing.getPackingId());
+				double rate = bpprtm.getRate();
+				double gst = bpprtm.getGST();
+				double sgst_cgst = (rate * gst) / 100;
+				rate = rate-sgst_cgst;
+				double amount = Double.valueOf(billing.getQuantity() * rate);
+				//sgst_cgst = (amount * gst) / 100;
+				sgst_cgst = sgst_cgst * billing.getQuantity();
+				double total = invoice.getTotal() + amount;
+				double sgst = invoice.getSgst() + (sgst_cgst / 2);
+				double cgst = invoice.getCgst() + (sgst_cgst / 2);
+				//double netAmount = invoice.getNetAmount() + invoice.getTotal() + invoice.getSgst() + invoice.getCgst();
+				System.out.println("Amount : "+amount+" || Rate : "+rate+" || GST : "+gst+" || SGT-CGST : "+sgst_cgst+" || SGST : "+sgst+" || CGST : "+cgst+" || Total : "+total);
+				billDetails.setRate(rate);
+				billDetails.setAmount(amount);
+				billDetails.setGst(gst);
+				invoice.setTotal(total);
+				invoice.setSgst(sgst);
+				invoice.setCgst(cgst);
+				//invoice.setNetAmount(netAmount);
+				billDetailsMap.put(entry.getKey(), billDetails);
+			}
+			double netAmount = invoice.getTotal() + invoice.getSgst() + invoice.getCgst();
+			System.out.println("NetAmount : "+netAmount);
+			invoice.setNetAmount(netAmount);
+			invoice.setBillDetailsMap(billDetailsMap);
+			invoice.setNetAmountInWords(EnglishNumberToWords.convert(new Double(invoice.getNetAmount()).longValue()));
+		}
 		return invoice;
 	}
 

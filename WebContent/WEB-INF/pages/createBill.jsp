@@ -195,7 +195,7 @@
 		                        </span>
 		                        </a>
                             <div role="menu" class="dropdown-menu left-menu-dropdown animated flipInX">
-                                <a href="inbox.html" class="dropdown-item">Create Bill</a>
+                                <a href="${pageContext.request.contextPath}/createbill" class="dropdown-item">Create Bill</a>
                             </div>
                         </li>
                         
@@ -442,6 +442,15 @@
                                 <div class="sparkline15-graph">
                                 <form:form method="POST" id="createbillForm" name="createbillForm" commandName="createbill" action="submitBill">
                                     <div class="row">
+                                    	<div class="col-lg-4 mg-b-20">
+                                            <div class="touchspin-inner">
+                                                <label>Bill Payment Type</label> 
+                                                <form:select class="form-control custom-select-value" name="billPaymentType" path="billPaymentTypeId" placeholder="Select Bill Payment Type" required="required">
+													<form:option value="" label="Select Payment Type"/>
+													<form:options items="${createbill.paymentTypeMap}"/>
+												</form:select>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Customer</label> 
@@ -471,8 +480,8 @@
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
-                                                <label>HSN Code</label> 
-                                                <form:input class="form-control" id="hsnCode" path="hsnCode" placeholder="HSN Code" required="required" />
+                                                <label>Quantity</label> 
+												 <form:input class="form-control" id="quantity" path="quantity" placeholder="Select Quantity" required="required" />
                                             </div>
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
@@ -485,10 +494,11 @@
                                         </div>
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
-                                                <label>Quantity</label> 
-												 <form:input class="form-control" id="quantity" path="quantity" placeholder="Select Quantity" required="required" />
+                                                <label>HSN Code</label> 
+                                                <form:input class="form-control" id="hsnCode" path="hsnCode" placeholder="HSN Code" required="required" />
                                             </div>
                                         </div>
+                                        
                                         <div class="col-lg-4 mg-b-20">
                                             <div class="touchspin-inner">
                                                 <label>Vehicle No</label> 
@@ -514,16 +524,6 @@
 														<span class="glyphicon glyphicon-time"></span>
 													</span>
 												</div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-lg-4 mg-b-20">
-                                            <div class="touchspin-inner">
-                                                <label>Bill Payment Type</label> 
-                                                <form:select class="form-control custom-select-value" name="billPaymentType" path="billPaymentTypeId" placeholder="Select Bill Payment Type" required="required">
-													<form:option value="" label="Select Payment Type"/>
-													<form:options items="${createbill.paymentTypeMap}"/>
-												</form:select>
                                             </div>
                                         </div>
                                         
